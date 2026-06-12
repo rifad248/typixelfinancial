@@ -15,24 +15,17 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        corp: {
-                            black: '#000000',
-                            dark: '#0a0a0a',
-                            panel: '#111111',
-                            border: '#1f1f1f',
-                            text: '#a1a1aa',
-                        }
+                        corp: { black: '#000000', dark: '#0a0a0a', panel: '#111111', border: '#1f1f1f', text: '#a1a1aa' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
     </style>
 </head>
@@ -47,19 +40,19 @@
         <form id="login-form" class="space-y-4">
             <div>
                 <label class="text-xs font-medium text-corp-text uppercase tracking-wider">Username</label>
-                <input type="text" id="login-user" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-colors" required>
+                <input type="text" id="login-user" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500" required>
             </div>
             <div class="relative">
                 <label class="text-xs font-medium text-corp-text uppercase tracking-wider">Password</label>
-                <input type="password" id="login-pass" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-colors" required>
+                <input type="password" id="login-pass" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500" required>
                 <button type="button" id="toggle-pass" class="absolute right-3 top-9 text-xs text-corp-text hover:text-white">SHOW</button>
             </div>
             <div class="flex items-center justify-between">
                 <label class="flex items-center text-xs text-corp-text"><input type="checkbox" id="remember-me" class="mr-2 rounded bg-corp-black border-corp-border text-purple-600 focus:ring-purple-500">Remember me</label>
                 <a href="#" class="text-xs text-purple-500 hover:text-purple-400">Forgot Password?</a>
             </div>
-            <button type="submit" class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition-colors">Sign In</button>
-            <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid credentials. Use admin/admin123</p>
+            <button type="submit" id="login-btn" class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition-colors">Sign In</button>
+            <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid credentials.</p>
         </form>
     </div>
 
@@ -81,26 +74,21 @@
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col h-full overflow-hidden bg-corp-black">
-            <!-- Top Bar -->
             <header class="h-16 bg-corp-panel border-b border-corp-border flex items-center justify-between px-6 shrink-0">
                 <button id="menu-toggle" class="md:hidden text-corp-text hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
                 <div class="flex-1 md:flex-none md:max-w-xs px-4">
-                    <input type="text" id="global-search" placeholder="Search records..." class="w-full bg-corp-black border border-corp-border rounded py-1.5 px-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-purple-500 transition-colors">
+                    <input type="text" id="global-search" placeholder="Search records..." class="w-full bg-corp-black border border-corp-border rounded py-1.5 px-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-purple-500">
                 </div>
                 <div class="relative">
                     <button id="notif-btn" class="text-corp-text hover:text-white relative">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                         <span id="notif-badge" class="absolute top-0 right-0 w-2 h-2 bg-purple-600 rounded-full hidden"></span>
                     </button>
-                    <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-corp-panel border border-corp-border rounded shadow-xl py-2 max-h-64 overflow-y-auto z-50">
-                        <p class="px-4 py-2 text-xs text-corp-text">No new notifications</p>
-                    </div>
+                    <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-corp-panel border border-corp-border rounded shadow-xl py-2 max-h-64 overflow-y-auto z-50"></div>
                 </div>
             </header>
-
-            <!-- Page Content -->
             <main id="page-content" class="flex-1 overflow-y-auto p-6"></main>
         </div>
     </div>
@@ -117,41 +105,44 @@
     </div>
 
 <script>
-// --- CORE ARCHITECTURE ---
+const API_URL = 'https://script.google.com/macros/s/AKfycbziL2fbvRL5J-toDIewz9K1OZS8HWiTu8K02aa2_1kqxmnEs-fz9mDbiymgXEA7ZWN4/exec';
+
 const App = {
     user: null,
-    db: {},
+    db: { members: [], salaries: [], income: [], expenses: [], savings: [], activities: [], notifications: [], settings: { companyName: 'TyPixel', currency: '$' } },
     
-    init() {
-        this.loadDb();
-        this.checkSession();
-        this.bindEvents();
+    init() { this.bindEvents(); this.checkSession(); },
+
+    async apiCall(table, action, payload = null, id = null) {
+        let url = `${API_URL}?action=${action}&table=${table}`;
+        if (id) url += `&id=${id}`;
+        
+        // Using 'text/plain' to bypass Google Apps Script CORS Preflight issues
+        const options = { method: action === 'read' ? 'GET' : 'POST' };
+        if (payload) {
+            options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+            options.body = JSON.stringify(payload);
+        }
+        
+        try {
+            const res = await fetch(url, options);
+            const data = await res.json();
+            return data.data || [];
+        } catch (err) {
+            console.error("API Error:", err);
+            return [];
+        }
     },
 
-    loadDb() {
-        const defaultDb = {
-            members: [], salaries: [], income: [], expenses: [], savings: [],
-            activities: [], notifications: [], settings: { companyName: 'TyPixel', currency: '$' }
-        };
-        const storedDb = localStorage.getItem('typixel_db');
-        this.db = storedDb ? JSON.parse(storedDb) : defaultDb;
-        if (!storedDb) this.seedData();
+    async loadDb() {
+        this.db.members = await this.apiCall('Members', 'read');
+        this.db.salaries = await this.apiCall('Salaries', 'read');
+        this.db.income = await this.apiCall('Income', 'read');
+        this.db.expenses = await this.apiCall('Expenses', 'read');
+        this.db.savings = await this.apiCall('Savings', 'read');
+        this.db.activities = await this.apiCall('Activities', 'read');
+        this.db.notifications = await this.apiCall('Notifications', 'read');
     },
-
-    saveDb() { localStorage.setItem('typixel_db', JSON.stringify(this.db)); },
-
-    seedData() {
-        const m1Id = this.uuid();
-        this.db.members.push({ id: m1Id, name: 'John Doe', empId: 'EMP-001', position: 'Lead Developer', department: 'Engineering', email: 'john@typixel.com', phone: '555-0100', joinDate: '2022-01-15', salary: 8000, status: 'Active', photo: '' });
-        this.db.income.push({ id: this.uuid(), source: 'SaaS Platform', desc: 'Monthly subscriptions', amount: 25000, date: '2023-10-01', category: 'Client Payments' });
-        this.db.expenses.push({ id: this.uuid(), name: 'AWS Infrastructure', desc: 'Monthly server costs', amount: 1200, date: '2023-10-02', category: 'Software' });
-        this.db.salaries.push({ id: this.uuid(), memberId: m1Id, name: 'John Doe', amount: 8000, date: '2023-10-01', status: 'Paid', notes: 'October salary' });
-        this.db.savings.push({ id: this.uuid(), type: 'Deposit', amount: 10000, date: '2023-10-05', desc: 'Q3 Reserve' });
-        this.addActivity('System initialized with sample data');
-        this.saveDb();
-    },
-
-    uuid() { return 'xxxx-xxxx-xxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16)); },
 
     checkSession() {
         const session = localStorage.getItem('typixel_session') || sessionStorage.getItem('typixel_session');
@@ -159,15 +150,19 @@ const App = {
         else { this.showLogin(); }
     },
 
-    login(username, password, remember) {
-        if (username === 'admin' && password === 'admin123') {
-            this.user = 'admin';
+    async login(username, password, remember) {
+        document.getElementById('login-btn').textContent = 'Signing In...';
+        const users = await this.apiCall('Users', 'read');
+        const user = users.find(u => u.username === username && u.password === password);
+        
+        if (user) {
+            this.user = username;
             if (remember) localStorage.setItem('typixel_session', 'active');
             else sessionStorage.setItem('typixel_session', 'active');
-            this.addActivity('User logged in');
             this.showApp();
             return true;
         }
+        document.getElementById('login-btn').textContent = 'Sign In';
         return false;
     },
 
@@ -178,15 +173,11 @@ const App = {
         this.showLogin();
     },
 
-    showLogin() {
-        document.getElementById('login-view').classList.remove('hidden');
-        document.getElementById('app-view').classList.add('hidden');
-    },
-
-    showApp() {
+    async showApp() {
         document.getElementById('login-view').classList.add('hidden');
         document.getElementById('app-view').classList.remove('hidden');
         this.setupNav();
+        await this.loadDb(); 
         this.navigate(window.location.hash.slice(1) || 'dashboard');
         this.checkNotifications();
     },
@@ -210,8 +201,7 @@ const App = {
             { id: 'income', label: 'Income', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>' },
             { id: 'expenses', label: 'Expenses', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>' },
             { id: 'savings', label: 'Savings', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>' },
-            { id: 'reports', label: 'Reports', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>' },
-            { id: 'settings', label: 'Settings', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>' }
+            { id: 'reports', label: 'Reports', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>' }
         ];
         document.getElementById('nav-links').innerHTML = navItems.map(item => `
             <a href="#${item.id}" data-page="${item.id}" class="nav-link flex items-center gap-3 px-4 py-2.5 mx-2 rounded text-xs font-medium text-corp-text hover:bg-corp-black hover:text-white transition-colors mb-1">
@@ -224,29 +214,31 @@ const App = {
         });
     },
 
-    formatCurrency(amount) { return `${this.db.settings.currency}${parseFloat(amount).toLocaleString('en-US', {minimumFractionDigits: 2})}`; },
-    formatDate(dateStr) { return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); },
+    formatCurrency(amount) { return `${this.db.settings.currency}${parseFloat(amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}`; },
+    formatDate(dateStr) { if(!dateStr) return 'N/A'; return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); },
     
-    addActivity(desc) {
-        this.db.activities.unshift({ desc, time: new Date().toISOString() });
-        if(this.db.activities.length > 100) this.db.activities.pop();
-        this.saveDb();
+    async addActivity(desc) {
+        const payload = { id: 'act_'+Date.now(), desc, time: new Date().toISOString() };
+        this.db.activities.unshift(payload);
+        await this.apiCall('Activities', 'create', payload);
+        this.checkNotifications();
     },
 
-    addNotification(desc) {
-        this.db.notifications.unshift({ desc, time: new Date().toISOString(), read: false });
-        this.saveDb();
+    async addNotification(desc) {
+        const payload = { id: 'notif_'+Date.now(), desc, time: new Date().toISOString(), read: 'false' };
+        this.db.notifications.unshift(payload);
+        await this.apiCall('Notifications', 'create', payload);
         this.checkNotifications();
     },
 
     checkNotifications() {
-        const unread = this.db.notifications.filter(n => !n.read).length;
+        const unread = this.db.notifications.filter(n => n.read === 'false' || n.read === false).length;
         const badge = document.getElementById('notif-badge');
         const dropdown = document.getElementById('notif-dropdown');
         if (unread > 0) {
             badge.classList.remove('hidden');
             dropdown.innerHTML = this.db.notifications.slice(0, 10).map(n => `
-                <div class="px-4 py-2 hover:bg-corp-black border-b border-corp-border ${!n.read ? 'text-white' : 'text-corp-text'}">
+                <div class="px-4 py-2 hover:bg-corp-black border-b border-corp-border ${(n.read === 'false' || n.read === false) ? 'text-white' : 'text-corp-text'}">
                     <p class="text-xs">${n.desc}</p>
                     <p class="text-[10px] text-zinc-600 mt-1">${this.formatDate(n.time)}</p>
                 </div>
@@ -266,39 +258,35 @@ const App = {
     closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); },
 
     bindEvents() {
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked)) {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+            const success = await this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked);
+            if (!success) document.getElementById('login-error').classList.remove('hidden');
         });
         document.getElementById('toggle-pass').addEventListener('click', (e) => {
             const input = document.getElementById('login-pass');
             input.type = input.type === 'password' ? 'text' : 'password';
             e.target.textContent = input.type === 'password' ? 'SHOW' : 'HIDE';
         });
-        document.getElementById('logout-btn').addEventListener('click', () => { this.addActivity('User logged out'); this.logout(); });
+        document.getElementById('logout-btn').addEventListener('click', () => { this.logout(); });
         document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
         document.getElementById('modal-close').addEventListener('click', () => this.closeModal());
         document.getElementById('modal-overlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) this.closeModal(); });
-        document.getElementById('notif-btn').addEventListener('click', () => {
+        document.getElementById('notif-btn').addEventListener('click', async () => {
             document.getElementById('notif-dropdown').classList.toggle('hidden');
-            this.db.notifications.forEach(n => n.read = true);
-            this.saveDb(); this.checkNotifications();
+            for(let n of this.db.notifications) { if(n.read === 'false' || n.read === false) { n.read = 'true'; await this.apiCall('Notifications', 'update', n, n.id); } }
+            this.checkNotifications();
         });
     }
 };
 
-// --- PAGES ---
 const Pages = {
-    
-    // ==================== DASHBOARD ====================
     dashboard: {
         render() {
-            const totalIncome = App.db.income.reduce((s, i) => s + parseFloat(i.amount), 0);
-            const totalExpenses = App.db.expenses.reduce((s, e) => s + parseFloat(e.amount), 0);
-            const totalSalaries = App.db.salaries.reduce((s, sly) => s + parseFloat(sly.amount), 0);
-            const totalSavings = App.db.savings.reduce((s, sv) => s + (sv.type === 'Deposit' ? parseFloat(sv.amount) : -parseFloat(sv.amount)), 0);
+            const totalIncome = App.db.income.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
+            const totalExpenses = App.db.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0);
+            const totalSalaries = App.db.salaries.reduce((s, sly) => s + parseFloat(sly.amount || 0), 0);
+            const totalSavings = App.db.savings.reduce((s, sv) => s + (sv.type === 'Deposit' ? parseFloat(sv.amount || 0) : -parseFloat(sv.amount || 0)), 0);
             const netProfit = totalIncome - totalExpenses - totalSalaries;
             
             let health = { text: '', color: '' };
@@ -323,9 +311,6 @@ const Pages = {
                     ${card('Net Profit', App.formatCurrency(netProfit), netProfit >= 0 ? 'text-green-400' : 'text-red-400')}
                     ${card('Company Savings', App.formatCurrency(totalSavings), 'text-purple-400')}
                     ${card('Total Salary Paid', App.formatCurrency(totalSalaries))}
-                    ${card('Monthly Income', App.formatCurrency(totalIncome / 12))}
-                    ${card('Monthly Expenses', App.formatCurrency(totalExpenses / 12))}
-                    ${card('Current Balance', App.formatCurrency(totalIncome - totalExpenses - totalSavings))}
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-corp-panel border border-corp-border p-4 rounded">
@@ -341,11 +326,10 @@ const Pages = {
         },
         table(data, cols) {
             if(!data.length) return '<p class="text-corp-text text-xs">No data</p>';
-            return `<table class="w-full text-xs text-left"><tbody>${data.map(row => `<tr class="border-b border-corp-border"><td class="py-2 text-white">${row[cols[0]]}</td><td class="py-2 text-purple-400">${App.formatCurrency(row[cols[1]])}</td><td class="py-2 text-corp-text text-right">${App.formatDate(row[cols[2]])}</td></tr>`).join('')}</tbody></table>`;
+            return `<table class="w-full text-xs text-left"><tbody>${data.map(row => `<tr class="border-b border-corp-border"><td class="py-2 text-white">${row[cols[0]] || ''}</td><td class="py-2 text-purple-400">${App.formatCurrency(row[cols[1]])}</td><td class="py-2 text-corp-text text-right">${App.formatDate(row[cols[2]])}</td></tr>`).join('')}</tbody></table>`;
         }
     },
 
-    // ==================== MEMBERS ====================
     members: {
         render() {
             return `
@@ -357,13 +341,13 @@ const Pages = {
                     ${App.db.members.map(m => `
                         <div class="bg-corp-panel border border-corp-border p-4 rounded flex items-start gap-4">
                             <div class="w-16 h-16 rounded bg-corp-black border border-corp-border overflow-hidden shrink-0 flex items-center justify-center">
-                                ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : `<span class="text-xl text-zinc-700">${m.name.charAt(0)}</span>`}
+                                ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : `<span class="text-xl text-zinc-700">${(m.name || '?').charAt(0)}</span>`}
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="text-sm font-semibold text-white truncate">${m.name}</h4>
-                                <p class="text-xs text-corp-text mt-0.5">${m.position} - ${m.department}</p>
+                                <h4 class="text-sm font-semibold text-white truncate">${m.name || 'Unknown'}</h4>
+                                <p class="text-xs text-corp-text mt-0.5">${m.position || ''} - ${m.department || ''}</p>
                                 <p class="text-xs text-purple-400 mt-1">${App.formatCurrency(m.salary)}</p>
-                                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold rounded ${m.status === 'Active' ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}">${m.status}</span>
+                                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold rounded ${m.status === 'Active' ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}">${m.status || 'N/A'}</span>
                             </div>
                             <div class="flex flex-col gap-1">
                                 <button data-edit="${m.id}" class="text-[10px] text-corp-text hover:text-white">EDIT</button>
@@ -377,10 +361,10 @@ const Pages = {
         init() {
             document.getElementById('add-member-btn')?.addEventListener('click', () => this.showForm());
             document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', (e) => this.showForm(e.target.dataset.edit)));
-            document.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', (e) => {
-                App.db.members = App.db.members.filter(m => m.id !== e.target.dataset.del);
+            document.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Members', 'delete', null, e.target.dataset.del);
                 App.addActivity('Deleted member record');
-                App.saveDb(); App.navigate('members');
+                await App.loadDb(); App.navigate('members');
             }));
         },
         showForm(id = null) {
@@ -398,16 +382,16 @@ const Pages = {
                     <input type="hidden" id="m-id" value="${m?.id || ''}">
                     <input type="hidden" id="m-photo-data" value="${m?.photo || ''}">
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="text-[10px] text-corp-text uppercase">Full Name</label><input id="m-name" value="${m?.name || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"></div>
-                        <div><label class="text-[10px] text-corp-text uppercase">Employee ID</label><input id="m-empid" value="${m?.empId || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Full Name</label><input id="m-name" value="${m?.name || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Employee ID</label><input id="m-empid" value="${m?.empId || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="text-[10px] text-corp-text uppercase">Position</label><input id="m-pos" value="${m?.position || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"></div>
-                        <div><label class="text-[10px] text-corp-text uppercase">Department</label><input id="m-dept" value="${m?.department || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Position</label><input id="m-pos" value="${m?.position || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Department</label><input id="m-dept" value="${m?.department || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="text-[10px] text-corp-text uppercase">Monthly Salary</label><input type="number" id="m-salary" value="${m?.salary || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"></div>
-                        <div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="m-status" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"><option ${m?.status === 'Active' ? 'selected' : ''}>Active</option><option ${m?.status === 'Inactive' ? 'selected' : ''}>Inactive</option></select></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Monthly Salary</label><input type="number" id="m-salary" value="${m?.salary || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="m-status" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"><option ${m?.status === 'Active' ? 'selected' : ''}>Active</option><option ${m?.status === 'Inactive' ? 'selected' : ''}>Inactive</option></select></div>
                     </div>
                     <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors mt-2">Save Member</button>
                 </form>
@@ -435,26 +419,27 @@ const Pages = {
                 }
             });
 
-            document.getElementById('member-form').addEventListener('submit', (e) => {
+            document.getElementById('member-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const id = document.getElementById('m-id').value;
-                const data = {
-                    id: id || App.uuid(), name: document.getElementById('m-name').value, empId: document.getElementById('m-empid').value,
+                const payload = {
+                    id: id || 'mem_'+Date.now(), name: document.getElementById('m-name').value, empId: document.getElementById('m-empid').value,
                     position: document.getElementById('m-pos').value, department: document.getElementById('m-dept').value,
                     salary: document.getElementById('m-salary').value, status: document.getElementById('m-status').value,
                     photo: document.getElementById('m-photo-data').value
                 };
-                if (id) { const idx = App.db.members.findIndex(m => m.id === id); App.db.members[idx] = data; App.addActivity(`Updated member: ${data.name}`); } 
-                else { App.db.members.push(data); App.addActivity(`Added member: ${data.name}`); }
-                App.saveDb(); App.closeModal(); App.navigate('members');
+                
+                if (id) { await App.apiCall('Members', 'update', payload, id); App.addActivity(`Updated member: ${payload.name}`); } 
+                else { await App.apiCall('Members', 'create', payload); App.addActivity(`Added member: ${payload.name}`); }
+                
+                App.closeModal(); await App.loadDb(); App.navigate('members');
             });
         }
     },
 
-    // ==================== SALARY ====================
     salary: {
         render() {
-            const totalPaid = App.db.salaries.reduce((s, r) => s + parseFloat(r.amount), 0);
+            const totalPaid = App.db.salaries.reduce((s, r) => s + parseFloat(r.amount || 0), 0);
             return `
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-bold text-white">Salary Management</h2>
@@ -464,10 +449,10 @@ const Pages = {
                     <p class="text-xs text-corp-text uppercase">Total Salary Paid</p>
                     <p class="text-xl font-bold text-white mt-1">${App.formatCurrency(totalPaid)}</p>
                 </div>
-                <div class="bg-corp-panel border border-corp-border rounded overflow-hidden">
+                <div class="bg-corp-panel border border-corp-border rounded overflow-x-auto">
                     <table class="w-full text-xs text-left">
                         <thead class="bg-corp-black text-corp-text uppercase"><tr><th class="p-3">Employee</th><th class="p-3">Amount</th><th class="p-3">Date</th><th class="p-3">Status</th><th class="p-3">Action</th></tr></thead>
-                        <tbody>${App.db.salaries.map(s => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${s.name}</td><td class="p-3 text-purple-400">${App.formatCurrency(s.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(s.date)}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${s.status === 'Paid' ? 'bg-green-900/20 text-green-400' : 'bg-yellow-900/20 text-yellow-400'}">${s.status}</span></td><td class="p-3"><button data-del-sal="${s.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
+                        <tbody>${App.db.salaries.map(s => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${s.name || ''}</td><td class="p-3 text-purple-400">${App.formatCurrency(s.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(s.date)}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${s.status === 'Paid' ? 'bg-green-900/20 text-green-400' : 'bg-yellow-900/20 text-yellow-400'}">${s.status || 'Pending'}</span></td><td class="p-3"><button data-del-sal="${s.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
                     </table>
                 </div>
             `;
@@ -488,28 +473,28 @@ const Pages = {
                     const mem = App.db.members.find(m => m.id === e.target.value);
                     if(mem) document.getElementById('s-amount').value = mem.salary;
                 });
-                document.getElementById('sal-form').addEventListener('submit', (e) => {
+                document.getElementById('sal-form').addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const sel = document.getElementById('s-member');
-                    App.db.salaries.push({ id: App.uuid(), memberId: sel.value, name: sel.options[sel.selectedIndex].dataset.name, amount: document.getElementById('s-amount').value, date: document.getElementById('s-date').value, status: document.getElementById('s-status').value });
+                    const payload = { id: 'sal_'+Date.now(), memberId: sel.value, name: sel.options[sel.selectedIndex].dataset.name, amount: document.getElementById('s-amount').value, date: document.getElementById('s-date').value, status: document.getElementById('s-status').value };
+                    await App.apiCall('Salaries', 'create', payload);
                     App.addActivity('Added salary payment');
-                    App.saveDb(); App.closeModal(); App.navigate('salary');
+                    App.closeModal(); await App.loadDb(); App.navigate('salary');
                 });
             });
-            document.querySelectorAll('[data-del-sal]').forEach(btn => btn.addEventListener('click', (e) => {
-                App.db.salaries = App.db.salaries.filter(s => s.id !== e.target.dataset.delSal);
+            document.querySelectorAll('[data-del-sal]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Salaries', 'delete', null, e.target.dataset.delSal);
                 App.addActivity('Deleted salary record');
-                App.saveDb(); App.navigate('salary');
+                await App.loadDb(); App.navigate('salary');
             }));
         }
     },
 
-    // ==================== INCOME ====================
     income: {
         render() { return this.page('income', 'Income', ['Client Payments','Donations','Sponsorships','Investments','Other Revenue']); },
         init() { this.initPage('income', 'source', 'Income'); },
         page(type, title, cats) {
-            const data = App.db[type]; const total = data.reduce((s, i) => s + parseFloat(i.amount), 0);
+            const data = App.db[type]; const total = data.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
             return `
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-bold text-white">${title} Management</h2>
@@ -522,12 +507,12 @@ const Pages = {
                 <div class="bg-corp-panel border border-corp-border rounded overflow-x-auto">
                     <table class="w-full text-xs text-left">
                         <thead class="bg-corp-black text-corp-text uppercase"><tr><th class="p-3">Name</th><th class="p-3">Category</th><th class="p-3">Amount</th><th class="p-3">Date</th><th class="p-3">Action</th></tr></thead>
-                        <tbody>${data.map(i => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${type === 'income' ? i.source : i.name}</td><td class="p-3 text-corp-text"><span class="px-2 py-0.5 bg-corp-black rounded">${i.category}</span></td><td class="p-3 text-purple-400">${App.formatCurrency(i.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(i.date)}</td><td class="p-3"><button data-del-fin="${i.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
+                        <tbody>${data.map(i => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${type === 'income' ? i.source : i.name}</td><td class="p-3 text-corp-text"><span class="px-2 py-0.5 bg-corp-black rounded">${i.category || ''}</span></td><td class="p-3 text-purple-400">${App.formatCurrency(i.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(i.date)}</td><td class="p-3"><button data-del-fin="${i.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
                     </table>
                 </div>
             `;
         },
-        initPage(type, field, title, cats) {
+        initPage(type, field, title) {
             const catsArr = type === 'income' ? ['Client Payments','Donations','Sponsorships','Investments','Other Revenue'] : ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous'];
             document.getElementById('add-fin-btn')?.addEventListener('click', () => {
                 App.openModal(`Add ${title}`, `
@@ -539,31 +524,31 @@ const Pages = {
                         <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors">Save</button>
                     </form>
                 `);
-                document.getElementById('fin-form').addEventListener('submit', (e) => {
+                document.getElementById('fin-form').addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    App.db[type].push({ id: App.uuid(), [field]: document.getElementById('f-name').value, amount: document.getElementById('f-amount').value, category: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, desc: '' });
+                    const payload = { id: type.charAt(0)+'_'+Date.now(), [field]: document.getElementById('f-name').value, amount: document.getElementById('f-amount').value, category: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, desc: '' };
+                    await App.apiCall(type.charAt(0).toUpperCase() + type.slice(1), 'create', payload);
                     App.addActivity(`Added ${title} record`);
-                    App.saveDb(); App.closeModal(); App.navigate(type);
+                    App.closeModal(); await App.loadDb(); App.navigate(type);
                 });
             });
-            document.querySelectorAll('[data-del-fin]').forEach(btn => btn.addEventListener('click', (e) => {
-                App.db[type] = App.db[type].filter(i => i.id !== e.target.dataset.delFin);
+            document.querySelectorAll('[data-del-fin]').forEach(btn => btn.addEventListener('click', async (e) => {
+                const table = type.charAt(0).toUpperCase() + type.slice(1);
+                await App.apiCall(table, 'delete', null, e.target.dataset.delFin);
                 App.addActivity(`Deleted ${title} record`);
-                App.saveDb(); App.navigate(type);
+                await App.loadDb(); App.navigate(type);
             }));
         }
     },
 
-    // ==================== EXPENSES ====================
     expenses: {
         render() { return Pages.income.page('expenses', 'Expenses', ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous']); },
         init() { return Pages.income.initPage('expenses', 'name', 'Expenses'); }
     },
 
-    // ==================== SAVINGS ====================
     savings: {
         render() {
-            const balance = App.db.savings.reduce((s, r) => s + (r.type === 'Deposit' ? parseFloat(r.amount) : -parseFloat(r.amount)), 0);
+            const balance = App.db.savings.reduce((s, r) => s + (r.type === 'Deposit' ? parseFloat(r.amount || 0) : -parseFloat(r.amount || 0)), 0);
             return `
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-bold text-white">Company Savings</h2>
@@ -596,23 +581,23 @@ const Pages = {
             `;
             document.getElementById('add-deposit')?.addEventListener('click', () => { App.openModal('Deposit Savings', form('Deposit')); this.bindForm(); });
             document.getElementById('add-withdraw')?.addEventListener('click', () => { App.openModal('Withdraw Savings', form('Withdraw')); this.bindForm(); });
-            document.querySelectorAll('[data-del-sav]').forEach(btn => btn.addEventListener('click', (e) => {
-                App.db.savings = App.db.savings.filter(i => i.id !== e.target.dataset.delSav);
+            document.querySelectorAll('[data-del-sav]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Savings', 'delete', null, e.target.dataset.delSav);
                 App.addActivity('Deleted savings record');
-                App.saveDb(); App.navigate('savings');
+                await App.loadDb(); App.navigate('savings');
             }));
         },
         bindForm() {
-            document.getElementById('sav-form').addEventListener('submit', (e) => {
+            document.getElementById('sav-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
-                App.db.savings.push({ id: App.uuid(), type: document.getElementById('sv-type').value, amount: document.getElementById('sv-amount').value, date: document.getElementById('sv-date').value, desc: document.getElementById('sv-desc').value });
-                App.addActivity(`Recorded ${document.getElementById('sv-type').value} in savings`);
-                App.saveDb(); App.closeModal(); App.navigate('savings');
+                const payload = { id: 'sav_'+Date.now(), type: document.getElementById('sv-type').value, amount: document.getElementById('sv-amount').value, date: document.getElementById('sv-date').value, desc: document.getElementById('sv-desc').value };
+                await App.apiCall('Savings', 'create', payload);
+                App.addActivity(`Recorded ${payload.type} in savings`);
+                App.closeModal(); await App.loadDb(); App.navigate('savings');
             });
         }
     },
 
-    // ==================== REPORTS & EXPORT ====================
     reports: {
         render() {
             return `
@@ -630,7 +615,7 @@ const Pages = {
                     <div class="bg-corp-panel border border-corp-border p-6 rounded">
                         <h3 class="text-sm font-semibold mb-4 text-white">Activity Log</h3>
                         <div class="space-y-2 max-h-80 overflow-y-auto pr-2">
-                            ${App.db.activities.map(a => `<div class="text-[11px] border-b border-corp-border pb-2"><span class="text-zinc-600">${new Date(a.time).toLocaleString()}</span><br><span class="text-corp-text">${a.desc}</span></div>`).join('')}
+                            ${App.db.activities.map(a => `<div class="text-[11px] border-b border-corp-border pb-2"><span class="text-zinc-600">${a.time ? new Date(a.time).toLocaleString() : ''}</span><br><span class="text-corp-text">${a.desc || ''}</span></div>`).join('')}
                         </div>
                     </div>
                 </div>
@@ -672,11 +657,10 @@ const Pages = {
             data.forEach(row => {
                 if(y > 280) { doc.addPage(); y = 20; }
                 let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
-                doc.text(col1 || '', 14, y);
-                doc.text(row.category || row.status || row.type || '', 59, y);
-                doc.text(`${App.db.settings.currency}${row.amount}`, 104, y);
-                doc.text(row.date || '', 149, y);
-                if(headers[3] === 'Description') doc.text(row.desc || '', 149, y);
+                doc.text(String(col1 || ''), 14, y);
+                doc.text(String(row.category || row.status || row.type || ''), 59, y);
+                doc.text(String(App.formatCurrency(row.amount)), 104, y);
+                doc.text(String(row.date || row.desc || ''), 149, y);
                 y += 8;
             });
             doc.save(`${title.replace(/\s/g, '_')}.pdf`);
@@ -686,8 +670,7 @@ const Pages = {
             const ws_data = [headers];
             data.forEach(row => {
                 let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
-                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date];
-                if(headers[3] === 'Description') r.push(row.desc || '');
+                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || ''];
                 ws_data.push(r);
             });
             const ws = XLSX.utils.aoa_to_sheet(ws_data); const wb = XLSX.utils.book_new();
@@ -698,77 +681,16 @@ const Pages = {
             let csv = headers.join(',') + '\n';
             data.forEach(row => {
                 let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
-                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date];
-                if(headers[3] === 'Description') r.push(row.desc || '');
-                csv += r.join(',') + '\n';
+                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || ''];
+                csv += r.map(v => `"${v}"`).join(',') + '\n';
             });
             const blob = new Blob([csv], { type: 'text/csv' }); const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s/g, '_')}.csv`; a.click();
             App.addActivity(`Exported CSV: ${title}`); App.closeModal();
         }
-    },
-
-    // ==================== SETTINGS ====================
-    settings: {
-        render() {
-            const s = App.db.settings;
-            return `
-                <h2 class="text-xl font-bold text-white mb-6">Settings</h2>
-                <div class="max-w-2xl space-y-6">
-                    <div class="bg-corp-panel border border-corp-border p-6 rounded">
-                        <h3 class="text-sm font-semibold mb-4 text-white">Company Profile</h3>
-                        <form id="settings-form" class="space-y-4">
-                            <div><label class="text-[10px] text-corp-text uppercase">Company Name</label><input id="c-name" value="${s.companyName}" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
-                            <div><label class="text-[10px] text-corp-text uppercase">Currency Symbol</label><input id="c-curr" value="${s.currency}" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
-                            <button type="submit" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-xs font-semibold transition-colors">Save Settings</button>
-                        </form>
-                    </div>
-                    <div class="bg-corp-panel border border-corp-border p-6 rounded">
-                        <h3 class="text-sm font-semibold mb-4 text-white">Backup & Restore</h3>
-                        <p class="text-xs text-corp-text mb-4">Download a full backup of your database or restore from a previous file.</p>
-                        <div class="flex gap-3">
-                            <button id="backup-btn" class="bg-corp-black border border-corp-border hover:border-purple-500 px-4 py-2 rounded text-xs font-semibold transition-colors text-white">Download Backup</button>
-                            <label class="bg-corp-black border border-corp-border hover:border-purple-500 px-4 py-2 rounded text-xs font-semibold transition-colors text-white cursor-pointer">
-                                Restore Backup <input type="file" id="restore-file" class="hidden" accept=".json">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            `;
-        },
-        init() {
-            document.getElementById('settings-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                App.db.settings.companyName = document.getElementById('c-name').value;
-                App.db.settings.currency = document.getElementById('c-curr').value;
-                App.addActivity('Settings updated');
-                App.saveDb(); App.navigate('settings');
-            });
-            document.getElementById('backup-btn').addEventListener('click', () => {
-                const blob = new Blob([JSON.stringify(App.db, null, 2)], { type: "application/json" });
-                const url = URL.createObjectURL(blob); const a = document.createElement('a');
-                a.href = url; a.download = `typixel_backup_${new Date().toISOString().split('T')[0]}.json`; a.click();
-                App.addActivity('Database backup downloaded');
-            });
-            document.getElementById('restore-file').addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(ev) {
-                        try {
-                            const data = JSON.parse(ev.target.result);
-                            if(data.members && data.income) { App.db = data; App.saveDb(); App.addActivity('Database restored from backup'); alert('Backup restored successfully!'); App.navigate('dashboard'); } 
-                            else { alert('Invalid backup file structure'); }
-                        } catch(err) { alert('Error parsing backup file'); }
-                    };
-                    reader.readAsText(file);
-                }
-            });
-        }
     }
 };
 
-// Start App
 document.addEventListener('DOMContentLoaded', () => App.init());
 </script>
 </body>
