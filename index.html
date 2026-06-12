@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TyPixel Support Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,53 +15,24 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        corp: { black: '#000000', dark: '#0a0a0a', panel: '#111111', border: '#1f1f1f', text: '#a1a1aa' },
-                        brand: { purple: '#8B5CF6', green: '#10B981', red: '#EF4444' }
-                    },
-                    borderRadius: { '2xl': '16px' }
+                        corp: { black: '#000000', dark: '#0a0a0a', panel: '#111111', border: '#1f1f1f', text: '#a1a1aa' }
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { -webkit-font-smoothing: antialiased; background: #000; }
+        body { -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
-        
-        .glass-card {
-            background: rgba(17, 17, 17, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.1);
-        }
-        .glow-purple { box-shadow: 0 0 15px rgba(139, 92, 246, 0.15); }
-        .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.15); }
-        .glow-red { box-shadow: 0 0 15px rgba(239, 68, 68, 0.15); }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
-        
-        .circle-progress {
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
     </style>
 </head>
-<body class="text-white font-sans h-screen overflow-hidden flex items-center justify-center">
+<body class="bg-corp-black text-white font-sans h-screen overflow-hidden flex items-center justify-center">
     
     <!-- Login Screen -->
-    <div id="login-view" class="w-full max-w-sm p-8 space-y-6 glass-card rounded-2xl border border-corp-border">
+    <div id="login-view" class="w-full max-w-sm p-8 space-y-6 bg-corp-panel rounded border border-corp-border">
         <div class="text-center">
             <h1 class="text-2xl font-bold tracking-tight text-white">TyPixel</h1>
             <p class="text-xs text-corp-text mt-1 uppercase tracking-widest">Support Center</p>
@@ -70,32 +40,32 @@
         <form id="login-form" class="space-y-4">
             <div>
                 <label class="text-xs font-medium text-corp-text uppercase tracking-wider">Username</label>
-                <input type="text" id="login-user" class="mt-1 w-full px-3 py-2 bg-corp-black/50 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-brand-purple focus:border-brand-purple" required>
+                <input type="text" id="login-user" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500" required>
             </div>
             <div class="relative">
                 <label class="text-xs font-medium text-corp-text uppercase tracking-wider">Password</label>
-                <input type="password" id="login-pass" class="mt-1 w-full px-3 py-2 bg-corp-black/50 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-brand-purple focus:border-brand-purple" required>
+                <input type="password" id="login-pass" class="mt-1 w-full px-3 py-2 bg-corp-black border border-corp-border rounded text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500" required>
                 <button type="button" id="toggle-pass" class="absolute right-3 top-9 text-xs text-corp-text hover:text-white">SHOW</button>
             </div>
             <div class="flex items-center justify-between">
-                <label class="flex items-center text-xs text-corp-text"><input type="checkbox" id="remember-me" class="mr-2 rounded bg-corp-black border-corp-border text-brand-purple focus:ring-brand-purple">Remember me</label>
-                <a href="#" class="text-xs text-brand-purple hover:text-purple-400">Forgot Password?</a>
+                <label class="flex items-center text-xs text-corp-text"><input type="checkbox" id="remember-me" class="mr-2 rounded bg-corp-black border-corp-border text-purple-600 focus:ring-purple-500">Remember me</label>
+                <a href="#" class="text-xs text-purple-500 hover:text-purple-400">Forgot Password?</a>
             </div>
-            <button type="submit" id="login-btn" class="w-full py-2 px-4 bg-brand-purple hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors">Sign In</button>
-            <p id="login-error" class="text-brand-red text-xs text-center hidden">Invalid credentials.</p>
+            <button type="submit" id="login-btn" class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition-colors">Sign In</button>
+            <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid credentials.</p>
         </form>
     </div>
 
     <!-- App Shell -->
     <div id="app-view" class="hidden w-full h-full flex">
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 glass-card border-r border-white/5 flex flex-col h-full transition-all duration-200 md:translate-x-0 -translate-x-full fixed md:relative z-50 rounded-none">
-            <div class="h-16 flex items-center px-6 border-b border-white/5 shrink-0">
-                <span class="text-lg font-bold text-white tracking-tight">TyPixel <span class="text-brand-purple">.</span></span>
+        <aside id="sidebar" class="w-64 bg-corp-panel border-r border-corp-border flex flex-col h-full transition-all duration-200 md:translate-x-0 -translate-x-full fixed md:relative z-50">
+            <div class="h-16 flex items-center px-6 border-b border-corp-border shrink-0">
+                <span class="text-lg font-bold text-white tracking-tight">TyPixel <span class="text-purple-500">.</span></span>
             </div>
             <nav class="flex-1 overflow-y-auto py-4" id="nav-links"></nav>
-            <div class="p-4 border-t border-white/5">
-                <button id="logout-btn" class="w-full text-left px-4 py-2 text-xs text-corp-text hover:text-white hover:bg-white/5 rounded-xl transition-colors flex items-center gap-3">
+            <div class="p-4 border-t border-corp-border">
+                <button id="logout-btn" class="w-full text-left px-4 py-2 text-xs text-corp-text hover:text-white hover:bg-corp-black rounded transition-colors flex items-center gap-3">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     Logout
                 </button>
@@ -104,29 +74,29 @@
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col h-full overflow-hidden bg-corp-black">
-            <header class="h-16 glass-card border-b border-white/5 flex items-center justify-between px-6 shrink-0 rounded-none">
+            <header class="h-16 bg-corp-panel border-b border-corp-border flex items-center justify-between px-6 shrink-0">
                 <button id="menu-toggle" class="md:hidden text-corp-text hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
                 <div class="flex-1 md:flex-none md:max-w-xs px-4">
-                    <input type="text" id="global-search" placeholder="Search records..." class="w-full bg-white/5 border border-white/10 rounded-xl py-1.5 px-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-purple">
+                    <input type="text" id="global-search" placeholder="Search records..." class="w-full bg-corp-black border border-corp-border rounded py-1.5 px-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-purple-500">
                 </div>
                 <div class="relative">
                     <button id="notif-btn" class="text-corp-text hover:text-white relative">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        <span id="notif-badge" class="absolute top-0 right-0 w-2 h-2 bg-brand-purple rounded-full hidden"></span>
+                        <span id="notif-badge" class="absolute top-0 right-0 w-2 h-2 bg-purple-600 rounded-full hidden"></span>
                     </button>
-                    <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-72 glass-card rounded-2xl shadow-xl py-2 max-h-64 overflow-y-auto z-50"></div>
+                    <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-corp-panel border border-corp-border rounded shadow-xl py-2 max-h-64 overflow-y-auto z-50"></div>
                 </div>
             </header>
-            <main id="page-content" class="flex-1 overflow-y-auto p-8"></main>
+            <main id="page-content" class="flex-1 overflow-y-auto p-6"></main>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="glass-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="flex items-center justify-between p-4 border-b border-white/5">
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[100] flex items-center justify-center p-4">
+        <div class="bg-corp-panel w-full max-w-lg rounded border border-corp-border shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between p-4 border-b border-corp-border">
                 <h3 id="modal-title" class="text-lg font-semibold text-white"></h3>
                 <button id="modal-close" class="text-corp-text hover:text-white text-xl">&times;</button>
             </div>
@@ -135,28 +105,32 @@
     </div>
 
 <script>
-// YOUR CORRECT API URL IS RESTORED HERE
 const API_URL = 'https://script.google.com/macros/s/AKfycbwv9FYBZotIM_g-weHLabBGp9a5uDjd_xV4WJyb9IPqO0_-eBYkAqCzqJUSMVIiSeBAEQ/exec';
 
 const App = {
     user: null,
-    db: { members: [], salaries: [], income: [], expenses: [], savings: [], activities: [], notifications: [], settings: { companyName: 'TyPixel', currency: '₹' } },
+    db: { members: [], salaries: [], income: [], expenses: [], savings: [], activities: [], notifications: [], settings: { companyName: 'TyPixel', currency: '$' } },
     
     init() { this.bindEvents(); this.checkSession(); },
 
     async apiCall(table, action, payload = null, id = null) {
         let url = `${API_URL}?action=${action}&table=${table}`;
         if (id) url += `&id=${id}`;
+        
         const options = { method: action === 'read' ? 'GET' : 'POST', redirect: 'follow' };
         if (payload) {
             options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
             options.body = JSON.stringify(payload);
         }
+        
         try {
             const res = await fetch(url, options);
             const data = await res.json();
             return data.data || [];
-        } catch (err) { console.error("API Error:", err); return []; }
+        } catch (err) {
+            console.error("API Error:", err);
+            return [];
+        }
     },
 
     async loadDb() {
@@ -171,42 +145,71 @@ const App = {
 
     checkSession() {
         const session = localStorage.getItem('typixel_session') || sessionStorage.getItem('typixel_session');
-        if (session === 'active') { this.user = 'admin'; this.showApp(); } else { this.showLogin(); }
+        if (session === 'active') { this.user = 'admin'; this.showApp(); } 
+        else { this.showLogin(); }
     },
 
     async login(username, password, remember) {
         document.getElementById('login-btn').textContent = 'Signing In...';
         const errorEl = document.getElementById('login-error');
         errorEl.classList.add('hidden');
+        
         try {
             const users = await this.apiCall('Users', 'read');
-            if (!users || users.length === 0) { errorEl.textContent = "No users found in Sheet. Check 'Users' tab."; errorEl.classList.remove('hidden'); document.getElementById('login-btn').textContent = 'Sign In'; return false; }
+            console.log("Fetched Users from Sheet:", users);
+            
+            if (!users || users.length === 0) {
+                errorEl.textContent = "No users found in Google Sheet. Check 'Users' tab.";
+                errorEl.classList.remove('hidden');
+                document.getElementById('login-btn').textContent = 'Sign In';
+                return false;
+            }
+
             const user = users.find(u => u.username === username && u.password === password);
+            
             if (user) {
                 this.user = username;
-                if (remember) localStorage.setItem('typixel_session', 'active'); else sessionStorage.setItem('typixel_session', 'active');
-                this.showApp(); return true;
-            } else { errorEl.textContent = "Invalid credentials."; errorEl.classList.remove('hidden'); }
-        } catch (err) { errorEl.textContent = "Connection error. Check script URL."; errorEl.classList.remove('hidden'); }
-        document.getElementById('login-btn').textContent = 'Sign In'; return false;
+                if (remember) localStorage.setItem('typixel_session', 'active');
+                else sessionStorage.setItem('typixel_session', 'active');
+                this.showApp();
+                return true;
+            } else {
+                errorEl.textContent = "Invalid credentials. Check sheet data.";
+                errorEl.classList.remove('hidden');
+            }
+        } catch (err) {
+            errorEl.textContent = "Connection error. Check script URL.";
+            errorEl.classList.remove('hidden');
+        }
+        
+        document.getElementById('login-btn').textContent = 'Sign In';
+        return false;
     },
 
-    logout() { localStorage.removeItem('typixel_session'); sessionStorage.removeItem('typixel_session'); this.user = null; this.showLogin(); },
+    logout() {
+        localStorage.removeItem('typixel_session');
+        sessionStorage.removeItem('typixel_session');
+        this.user = null;
+        this.showLogin();
+    },
 
     async showApp() {
-        document.getElementById('login-view').classList.add('hidden'); document.getElementById('app-view').classList.remove('hidden');
-        this.setupNav(); await this.loadDb(); this.navigate(window.location.hash.slice(1) || 'dashboard'); this.checkNotifications();
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('app-view').classList.remove('hidden');
+        this.setupNav();
+        await this.loadDb(); 
+        this.navigate(window.location.hash.slice(1) || 'dashboard');
+        this.checkNotifications();
     },
 
     navigate(page) {
-        document.getElementById('sidebar').classList.add('-translate-x-full'); window.location.hash = page;
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        window.location.hash = page;
         document.getElementById('page-content').innerHTML = Pages[page] ? Pages[page].render() : Pages['dashboard'].render();
         if (Pages[page] && Pages[page].init) Pages[page].init();
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.toggle('bg-brand-purple/10', link.dataset.page === page);
-            link.classList.toggle('text-brand-purple', link.dataset.page === page);
-            link.classList.toggle('border-r-2', link.dataset.page === page);
-            link.classList.toggle('border-brand-purple', link.dataset.page === page);
+            link.classList.toggle('bg-purple-600/10', link.dataset.page === page);
+            link.classList.toggle('text-purple-400', link.dataset.page === page);
         });
     },
 
@@ -221,12 +224,13 @@ const App = {
             { id: 'reports', label: 'Reports', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>' }
         ];
         document.getElementById('nav-links').innerHTML = navItems.map(item => `
-            <a href="#${item.id}" data-page="${item.id}" class="nav-link flex items-center gap-3 px-4 py-2.5 mx-2 rounded-xl text-xs font-medium text-corp-text hover:bg-white/5 hover:text-white transition-all mb-1">
+            <a href="#${item.id}" data-page="${item.id}" class="nav-link flex items-center gap-3 px-4 py-2.5 mx-2 rounded text-xs font-medium text-corp-text hover:bg-corp-black hover:text-white transition-colors mb-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">${item.icon}</svg> ${item.label}
             </a>
         `).join('');
         document.getElementById('nav-links').addEventListener('click', (e) => {
-            const link = e.target.closest('.nav-link'); if (link) this.navigate(link.dataset.page);
+            const link = e.target.closest('.nav-link');
+            if (link) this.navigate(link.dataset.page);
         });
     },
 
@@ -235,55 +239,68 @@ const App = {
     
     async addActivity(desc) {
         const payload = { id: 'act_'+Date.now(), desc, time: new Date().toISOString() };
-        this.db.activities.unshift(payload); await this.apiCall('Activities', 'create', payload); this.checkNotifications();
+        this.db.activities.unshift(payload);
+        await this.apiCall('Activities', 'create', payload);
+        this.checkNotifications();
     },
 
     async addNotification(desc) {
         const payload = { id: 'notif_'+Date.now(), desc, time: new Date().toISOString(), read: 'false' };
-        this.db.notifications.unshift(payload); await this.apiCall('Notifications', 'create', payload); this.checkNotifications();
+        this.db.notifications.unshift(payload);
+        await this.apiCall('Notifications', 'create', payload);
+        this.checkNotifications();
     },
 
     checkNotifications() {
         const unread = this.db.notifications.filter(n => n.read === 'false' || n.read === false).length;
-        const badge = document.getElementById('notif-badge'); const dropdown = document.getElementById('notif-dropdown');
+        const badge = document.getElementById('notif-badge');
+        const dropdown = document.getElementById('notif-dropdown');
         if (unread > 0) {
             badge.classList.remove('hidden');
             dropdown.innerHTML = this.db.notifications.slice(0, 10).map(n => `
-                <div class="px-4 py-2 hover:bg-white/5 border-b border-white/5 ${(n.read === 'false' || n.read === false) ? 'text-white' : 'text-corp-text'}">
-                    <p class="text-xs">${n.desc}</p><p class="text-[10px] text-zinc-600 mt-1">${this.formatDate(n.time)}</p>
+                <div class="px-4 py-2 hover:bg-corp-black border-b border-corp-border ${(n.read === 'false' || n.read === false) ? 'text-white' : 'text-corp-text'}">
+                    <p class="text-xs">${n.desc}</p>
+                    <p class="text-[10px] text-zinc-600 mt-1">${this.formatDate(n.time)}</p>
                 </div>
             `).join('');
-        } else { badge.classList.add('hidden'); dropdown.innerHTML = '<p class="px-4 py-2 text-xs text-corp-text">No new notifications</p>'; }
+        } else {
+            badge.classList.add('hidden');
+            dropdown.innerHTML = '<p class="px-4 py-2 text-xs text-corp-text">No new notifications</p>';
+        }
     },
 
-    openModal(title, bodyHtml) { document.getElementById('modal-title').textContent = title; document.getElementById('modal-body').innerHTML = bodyHtml; document.getElementById('modal-overlay').classList.remove('hidden'); },
+    openModal(title, bodyHtml) {
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-body').innerHTML = bodyHtml;
+        document.getElementById('modal-overlay').classList.remove('hidden');
+    },
+
     closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); },
 
     bindEvents() {
-        document.getElementById('login-form').addEventListener('submit', async (e) => { e.preventDefault(); await this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked); });
-        document.getElementById('toggle-pass').addEventListener('click', (e) => { const input = document.getElementById('login-pass'); input.type = input.type === 'password' ? 'text' : 'password'; e.target.textContent = input.type === 'password' ? 'SHOW' : 'HIDE'; });
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked);
+        });
+        document.getElementById('toggle-pass').addEventListener('click', (e) => {
+            const input = document.getElementById('login-pass');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            e.target.textContent = input.type === 'password' ? 'SHOW' : 'HIDE';
+        });
         document.getElementById('logout-btn').addEventListener('click', () => { this.logout(); });
         document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
         document.getElementById('modal-close').addEventListener('click', () => this.closeModal());
         document.getElementById('modal-overlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) this.closeModal(); });
         document.getElementById('notif-btn').addEventListener('click', async () => {
             document.getElementById('notif-dropdown').classList.toggle('hidden');
-            for(let n of this.db.notifications) { if(n.read === 'false' || n.read === false) { n.read = 'true'; await this.apiCall('Notifications', 'update', n, n.id); } } this.checkNotifications();
+            for(let n of this.db.notifications) { if(n.read === 'false' || n.read === false) { n.read = 'true'; await this.apiCall('Notifications', 'update', n, n.id); } }
+            this.checkNotifications();
         });
     }
 };
 
 const Pages = {
     dashboard: {
-        getMonthlyData(monthsAgo = 0) {
-            const now = new Date(); const d = new Date(now.getFullYear(), now.getMonth() - monthsAgo, 1);
-            const m = d.getMonth(); const y = d.getFullYear();
-            const filter = (arr) => arr.filter(i => { const dt = new Date(i.date); return dt.getMonth() === m && dt.getFullYear() === y; });
-            const inc = filter(App.db.income).reduce((s, i) => s + parseFloat(i.amount || 0), 0);
-            const exp = filter(App.db.expenses).reduce((s, i) => s + parseFloat(i.amount || 0), 0);
-            const sal = filter(App.db.salaries).reduce((s, i) => s + parseFloat(i.amount || 0), 0);
-            return { income: inc, expenses: exp + sal, profit: inc - exp - sal };
-        },
         render() {
             const totalIncome = App.db.income.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
             const totalExpenses = App.db.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0);
@@ -291,204 +308,69 @@ const Pages = {
             const totalSavings = App.db.savings.reduce((s, sv) => s + (sv.type === 'Deposit' ? parseFloat(sv.amount || 0) : -parseFloat(sv.amount || 0)), 0);
             const netProfit = totalIncome - totalExpenses - totalSalaries;
             
-            const curMonth = this.getMonthlyData(0); const prevMonth = this.getMonthlyData(1);
-            const calcPerc = (cur, prev) => prev === 0 ? (cur > 0 ? 100 : 0) : Math.round(((cur - prev) / prev) * 100);
-            
-            let healthScore = 50; let healthStatus = 'Average'; let healthColor = 'text-yellow-400'; let healthStroke = '#EAB308';
-            if (netProfit > 0 && totalIncome > 0) { const ratio = netProfit / totalIncome; if(ratio > 0.3) { healthScore = 90; healthStatus = 'Excellent'; healthColor = 'text-brand-green'; healthStroke = '#10B981'; } else if(ratio > 0.1) { healthScore = 75; healthStatus = 'Good'; healthColor = 'text-blue-400'; healthStroke = '#3B82F6'; } else { healthScore = 60; healthStatus = 'Fair'; healthColor = 'text-yellow-400'; healthStroke = '#EAB308'; } }
-            else if (netProfit <= 0 && totalIncome > 0) { healthScore = 25; healthStatus = 'Critical'; healthColor = 'text-brand-red'; healthStroke = '#EF4444'; }
+            let health = { text: '', color: '' };
+            if (totalIncome === 0 && totalExpenses === 0) health = { text: 'No financial data yet.', color: 'text-zinc-500' };
+            else if (netProfit > totalIncome * 0.3) health = { text: 'Income growth is strong and expenses remain controlled. Financial health is excellent.', color: 'text-green-400' };
+            else if (netProfit > 0) health = { text: 'Revenue and expenses are balanced. Business performance remains stable.', color: 'text-blue-400' };
+            else if (netProfit === 0) health = { text: 'Income covers expenses, but profit margins should improve.', color: 'text-yellow-400' };
+            else if (netProfit < 0 && totalIncome > 0) health = { text: 'Expenses are rising faster than income. Spending should be reviewed.', color: 'text-orange-400' };
+            else health = { text: 'Expenses exceed income. Immediate financial adjustments are recommended.', color: 'text-red-400' };
 
-            const goalTarget = 100000; const goalCur = curMonth.income; const goalPerc = Math.min(Math.round((goalCur / goalTarget) * 100), 100);
+            const card = (label, value, color='text-white') => `<div class="bg-corp-panel border border-corp-border p-4 rounded"><p class="text-xs text-corp-text uppercase tracking-wider">${label}</p><p class="text-xl font-bold ${color} mt-1">${value}</p></div>`;
 
             return `
-                <h2 class="text-2xl font-bold text-white mb-8 animate-fade-in-up">Dashboard Overview</h2>
-                
-                <!-- Top Stat Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    ${this.renderStatCard('Revenue', totalIncome, calcPerc(curMonth.income, prevMonth.income), 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'glow-green', 'text-brand-green')}
-                    ${this.renderStatCard('Expenses', totalExpenses + totalSalaries, calcPerc(curMonth.expenses, prevMonth.expenses), 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z', 'glow-red', 'text-brand-red')}
-                    ${this.renderStatCard('Net Profit', netProfit, calcPerc(curMonth.profit, prevMonth.profit), 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'glow-green', netProfit >= 0 ? 'text-brand-green' : 'text-brand-red')}
-                    ${this.renderStatCard('Savings', totalSavings, 7, 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'glow-purple', 'text-brand-purple')}
+                <h2 class="text-xl font-bold text-white mb-6">Dashboard Overview</h2>
+                <div class="bg-corp-panel border border-corp-border p-4 rounded mb-8">
+                    <h3 class="text-xs font-medium text-corp-text uppercase tracking-wider mb-2">Financial Health Analysis</h3>
+                    <p class="text-sm font-medium ${health.color}">${health.text}</p>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- Financial Health Score -->
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.2s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-6">Financial Health Score</h3>
-                        <div class="flex flex-col items-center">
-                            <div class="relative w-32 h-32 mb-4">
-                                <svg class="w-full h-full" viewBox="0 0 36 36">
-                                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1f1f1f" stroke-width="2"></path>
-                                    <path class="circle-progress" id="health-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="${healthStroke}" stroke-width="2.5" stroke-dasharray="0, 100" stroke-linecap="round"></path>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center flex-col">
-                                    <span class="text-3xl font-bold text-white" id="health-score-num">0</span>
-                                    <span class="text-[10px] text-corp-text">/100</span>
-                                </div>
-                            </div>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold ${healthColor} bg-white/5">${healthStatus}</span>
-                        </div>
-                    </div>
-
-                    <!-- Monthly Comparison -->
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.3s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-6">Monthly Comparison</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white/5 p-3 rounded-xl">
-                                <p class="text-[10px] text-corp-text uppercase mb-2">Current Month</p>
-                                <p class="text-xs text-corp-text mb-1">Rev: <span class="text-white font-medium">${App.formatCurrency(curMonth.income)}</span></p>
-                                <p class="text-xs text-corp-text mb-1">Exp: <span class="text-white font-medium">${App.formatCurrency(curMonth.expenses)}</span></p>
-                                <p class="text-xs text-corp-text">Pft: <span class="text-brand-green font-medium">${App.formatCurrency(curMonth.profit)}</span></p>
-                            </div>
-                            <div class="bg-white/5 p-3 rounded-xl">
-                                <p class="text-[10px] text-corp-text uppercase mb-2">Previous Month</p>
-                                <p class="text-xs text-corp-text mb-1">Rev: <span class="text-white font-medium">${App.formatCurrency(prevMonth.income)}</span></p>
-                                <p class="text-xs text-corp-text mb-1">Exp: <span class="text-white font-medium">${App.formatCurrency(prevMonth.expenses)}</span></p>
-                                <p class="text-xs text-corp-text">Pft: <span class="text-brand-green font-medium">${App.formatCurrency(prevMonth.profit)}</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Goal Tracking -->
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.4s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-4">Monthly Revenue Goal</h3>
-                        <div class="flex justify-between items-end mb-2">
-                            <div><p class="text-2xl font-bold text-white">${goalPerc}%</p></div>
-                            <div class="text-right"><p class="text-[10px] text-corp-text uppercase">Target</p><p class="text-sm font-medium text-white">${App.formatCurrency(goalTarget)}</p></div>
-                        </div>
-                        <div class="w-full bg-white/5 rounded-full h-2.5 mb-4"><div id="goal-bar" class="bg-brand-purple h-2.5 rounded-full transition-all duration-1000" style="width: 0%"></div></div>
-                        <div class="flex justify-between text-xs text-corp-text"><span>Current: ${App.formatCurrency(goalCur)}</span><span>Remaining: ${App.formatCurrency(goalTarget - goalCur)}</span></div>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    ${card('Total Income', App.formatCurrency(totalIncome), 'text-green-400')}
+                    ${card('Total Expenses', App.formatCurrency(totalExpenses + totalSalaries), 'text-red-400')}
+                    ${card('Net Profit', App.formatCurrency(netProfit), netProfit >= 0 ? 'text-green-400' : 'text-red-400')}
+                    ${card('Company Savings', App.formatCurrency(totalSavings), 'text-purple-400')}
+                    ${card('Total Salary Paid', App.formatCurrency(totalSalaries))}
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- Cash Flow -->
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.5s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-6">Cash Flow Overview</h3>
-                        <div class="space-y-4">
-                            <div><div class="flex justify-between text-xs mb-1"><span class="text-corp-text">Money In</span><span class="text-brand-green font-medium">${App.formatCurrency(curMonth.income)}</span></div><div class="w-full bg-white/5 h-2 rounded-full"><div class="bg-brand-green h-2 rounded-full" style="width: ${curMonth.income > 0 ? (curMonth.income / (curMonth.income + curMonth.expenses)) * 100 : 0}%"></div></div></div>
-                            <div><div class="flex justify-between text-xs mb-1"><span class="text-corp-text">Money Out</span><span class="text-brand-red font-medium">${App.formatCurrency(curMonth.expenses)}</span></div><div class="w-full bg-white/5 h-2 rounded-full"><div class="bg-brand-red h-2 rounded-full" style="width: ${curMonth.expenses > 0 ? (curMonth.expenses / (curMonth.income + curMonth.expenses)) * 100 : 0}%"></div></div></div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center"><span class="text-xs text-corp-text">Net Flow</span><span class="text-sm font-semibold ${curMonth.profit >= 0 ? 'text-brand-green' : 'text-brand-red'}">${App.formatCurrency(curMonth.profit)}</span></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-corp-panel border border-corp-border p-4 rounded">
+                        <h3 class="text-sm font-semibold mb-4 text-white">Recent Income</h3>
+                        ${this.table(App.db.income.slice(0, 3), ['source', 'amount', 'date'])}
                     </div>
-
-                    <!-- Charts -->
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.6s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-4">Revenue vs Expense</h3>
-                        <canvas id="revExpChart" height="180"></canvas>
-                    </div>
-                    <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.7s">
-                        <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-4">Expense Breakdown</h3>
-                        <canvas id="expPieChart" height="180"></canvas>
-                    </div>
-                </div>
-
-                <!-- Recent Activity -->
-                <div class="glass-card p-6 rounded-2xl animate-fade-in-up" style="animation-delay: 0.8s">
-                    <h3 class="text-sm font-medium text-corp-text uppercase tracking-wider mb-4">Recent Activity</h3>
-                    <div class="relative border-l-2 border-white/5 ml-3 space-y-6">
-                        ${App.db.activities.slice(0, 5).map(a => `
-                            <div class="relative pl-6">
-                                <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-brand-purple"></div>
-                                <p class="text-xs text-white font-medium">${a.desc || 'System Activity'}</p>
-                                <p class="text-[10px] text-corp-text mt-1">${a.time ? new Date(a.time).toLocaleString() : ''}</p>
-                            </div>
-                        `).join('') || '<p class="text-xs text-corp-text pl-6">No activity yet</p>'}
+                    <div class="bg-corp-panel border border-corp-border p-4 rounded">
+                        <h3 class="text-sm font-semibold mb-4 text-white">Recent Expenses</h3>
+                        ${this.table(App.db.expenses.slice(0, 3), ['name', 'amount', 'date'])}
                     </div>
                 </div>
             `;
         },
-        renderStatCard(label, value, perc, icon, glowClass, colorClass) {
-            const isPos = perc >= 0;
-            return `
-                <div class="glass-card ${glowClass} p-6 rounded-2xl animate-fade-in-up">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-2 bg-white/5 rounded-xl"><svg class="w-5 h-5 ${colorClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${icon}"></path></svg></div>
-                        <span class="flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full ${isPos ? 'bg-brand-green/10 text-brand-green' : 'bg-brand-red/10 text-brand-red'}">
-                            <svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isPos ? 'M5 10l7-7m0 0l7 7m-7-7v18' : 'M19 14l-7 7m0 0l-7-7m7 7V3'}"></path></svg>
-                            ${Math.abs(perc)}%
-                        </span>
-                    </div>
-                    <p class="text-xs text-corp-text uppercase tracking-wider">${label}</p>
-                    <p class="text-xl font-bold text-white mt-1 count-up" data-target="${value}">0</p>
-                </div>
-            `;
-        },
-        init() {
-            // Count Up Animation
-            document.querySelectorAll('.count-up').forEach(el => {
-                const target = parseFloat(el.dataset.target || 0);
-                const duration = 1500; const start = performance.now();
-                const animate = (currentTime) => {
-                    const elapsed = currentTime - start; const progress = Math.min(elapsed / duration, 1);
-                    const current = target * progress; el.textContent = App.formatCurrency(current);
-                    if (progress < 1) requestAnimationFrame(animate); else el.textContent = App.formatCurrency(target);
-                }; requestAnimationFrame(animate);
-            });
-
-            // Circular Progress Animation
-            setTimeout(() => {
-                const circle = document.getElementById('health-circle');
-                const scoreNum = document.getElementById('health-score-num');
-                if(circle && scoreNum) {
-                    let healthScore = 50; let netProfit = App.db.income.reduce((s, i) => s + parseFloat(i.amount || 0), 0) - App.db.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0) - App.db.salaries.reduce((s, sly) => s + parseFloat(sly.amount || 0), 0);
-                    let totalIncome = App.db.income.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
-                    if (netProfit > 0 && totalIncome > 0) { const ratio = netProfit / totalIncome; if(ratio > 0.3) healthScore = 90; else if(ratio > 0.1) healthScore = 75; else healthScore = 60; }
-                    else if (netProfit <= 0 && totalIncome > 0) { healthScore = 25; }
-                    circle.setAttribute('stroke-dasharray', `${healthScore}, 100`);
-                    const duration = 1500; const start = performance.now();
-                    const animScore = (ct) => { const e = ct - start; const p = Math.min(e/duration, 1); scoreNum.innerText = Math.round(healthScore * p); if(p<1) requestAnimationFrame(animScore); };
-                    requestAnimationFrame(animScore);
-                }
-            }, 200);
-
-            // Goal Bar Animation
-            setTimeout(() => {
-                const goalBar = document.getElementById('goal-bar');
-                if(goalBar) { goalBar.style.width = goalBar.parentElement.previousElementSibling.querySelector('p').innerText; }
-            }, 300);
-
-            // Charts Initialization
-            try {
-                // Line Chart
-                const ctx1 = document.getElementById('revExpChart')?.getContext('2d');
-                if(ctx1) {
-                    new Chart(ctx1, { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Revenue', data: [30000, 45000, 35000, 50000, 49000, 60000], borderColor: '#10B981', tension: 0.4, borderWidth: 2, pointBackgroundColor: '#10B981' }, { label: 'Expenses', data: [20000, 21000, 24000, 22000, 23000, 20000], borderColor: '#EF4444', tension: 0.4, borderWidth: 2, pointBackgroundColor: '#EF4444' }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#a1a1aa', font: { size: 10 } } } }, scales: { y: { ticks: { color: '#a1a1aa', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }, x: { ticks: { color: '#a1a1aa', font: { size: 10 } }, grid: { display: false } } } } });
-                }
-                // Doughnut Chart
-                const ctx2 = document.getElementById('expPieChart')?.getContext('2d');
-                if(ctx2) {
-                    const expCats = {}; App.db.expenses.forEach(e => { expCats[e.category] = (expCats[e.category] || 0) + parseFloat(e.amount || 0); });
-                    const labels = Object.keys(expCats).length > 0 ? Object.keys(expCats) : ['Software', 'Marketing', 'Office'];
-                    const data = Object.values(expCats).length > 0 ? Object.values(expCats) : [400, 300, 200];
-                    new Chart(ctx2, { type: 'doughnut', data: { labels: labels, datasets: [{ data: data, backgroundColor: ['#8B5CF6', '#3B82F6', '#10B981', '#F59E0B', '#EF4444'], borderWidth: 0 }] }, options: { responsive: true, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { color: '#a1a1aa', font: { size: 10 }, padding: 15 } } } } });
-                }
-            } catch(e) { console.error("Chart init error", e); }
+        table(data, cols) {
+            if(!data.length) return '<p class="text-corp-text text-xs">No data</p>';
+            return `<table class="w-full text-xs text-left"><tbody>${data.map(row => `<tr class="border-b border-corp-border"><td class="py-2 text-white">${row[cols[0]] || ''}</td><td class="py-2 text-purple-400">${App.formatCurrency(row[cols[1]])}</td><td class="py-2 text-corp-text text-right">${App.formatDate(row[cols[2]])}</td></tr>`).join('')}</tbody></table>`;
         }
     },
 
     members: {
         render() {
             return `
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-white animate-fade-in-up">Member Management</h2>
-                    <button id="add-member-btn" class="bg-brand-purple hover:bg-purple-700 px-4 py-2 rounded-xl text-xs font-semibold transition-colors animate-fade-in-up">Add Member</button>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">Member Management</h2>
+                    <button id="add-member-btn" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-xs font-semibold transition-colors">Add Member</button>
                 </div>
-                <div id="members-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div id="members-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     ${App.db.members.map(m => `
-                        <div class="glass-card p-5 rounded-2xl flex items-start gap-4 animate-fade-in-up">
-                            <div class="w-16 h-16 rounded-xl bg-white/5 border border-white/10 overflow-hidden shrink-0 flex items-center justify-center">
+                        <div class="bg-corp-panel border border-corp-border p-4 rounded flex items-start gap-4">
+                            <div class="w-16 h-16 rounded bg-corp-black border border-corp-border overflow-hidden shrink-0 flex items-center justify-center">
                                 ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : `<span class="text-xl text-zinc-700">${(m.name || '?').charAt(0)}</span>`}
                             </div>
                             <div class="flex-1 min-w-0">
                                 <h4 class="text-sm font-semibold text-white truncate">${m.name || 'Unknown'}</h4>
                                 <p class="text-xs text-corp-text mt-0.5">${m.position || ''} - ${m.department || ''}</p>
-                                <p class="text-xs text-brand-purple mt-1 font-medium">${App.formatCurrency(m.salary)}</p>
-                                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold rounded-full ${m.status === 'Active' ? 'bg-brand-green/10 text-brand-green' : 'bg-brand-red/10 text-brand-red'}">${m.status || 'N/A'}</span>
+                                <p class="text-xs text-purple-400 mt-1">${App.formatCurrency(m.salary)}</p>
+                                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold rounded ${m.status === 'Active' ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}">${m.status || 'N/A'}</span>
                             </div>
                             <div class="flex flex-col gap-1">
-                                <button data-edit="${m.id}" class="text-[10px] text-corp-text hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition-colors">EDIT</button>
-                                <button data-del="${m.id}" class="text-[10px] text-corp-text hover:text-brand-red px-2 py-1 rounded-lg hover:bg-white/5 transition-colors">DEL</button>
+                                <button data-edit="${m.id}" class="text-[10px] text-corp-text hover:text-white">EDIT</button>
+                                <button data-del="${m.id}" class="text-[10px] text-corp-text hover:text-red-400">DEL</button>
                             </div>
                         </div>
                     `).join('')}
@@ -498,52 +380,333 @@ const Pages = {
         init() {
             document.getElementById('add-member-btn')?.addEventListener('click', () => this.showForm());
             document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', (e) => this.showForm(e.target.dataset.edit)));
-            document.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', async (e) => { await App.apiCall('Members', 'delete', null, e.target.dataset.del); App.addActivity('Deleted member record'); await App.loadDb(); App.navigate('members'); }));
+            document.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Members', 'delete', null, e.target.dataset.del);
+                App.addActivity('Deleted member record');
+                await App.loadDb(); App.navigate('members');
+            }));
         },
         showForm(id = null) {
             const m = id ? App.db.members.find(m => m.id === id) : null;
             App.openModal(id ? 'Edit Member' : 'Add Member', `
                 <form id="member-form" class="space-y-4">
-                    <div class="flex justify-center mb-4"><label class="cursor-pointer"><div id="photo-preview" class="w-24 h-24 rounded-xl bg-white/5 border border-dashed border-white/10 flex items-center justify-center overflow-hidden hover:border-brand-purple transition-colors">${m?.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : `<span class="text-[10px] text-corp-text text-center px-2">Upload Photo</span>`}</div><input type="file" id="m-photo" class="hidden" accept="image/png, image/jpeg, image/webp"></label></div>
-                    <input type="hidden" id="m-id" value="${m?.id || ''}"><input type="hidden" id="m-photo-data" value="${m?.photo || ''}">
-                    <div class="grid grid-cols-2 gap-4"><div><label class="text-[10px] text-corp-text uppercase">Full Name</label><input id="m-name" value="${m?.name || ''}" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Employee ID</label><input id="m-empid" value="${m?.empId || ''}" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div></div>
-                    <div class="grid grid-cols-2 gap-4"><div><label class="text-[10px] text-corp-text uppercase">Position</label><input id="m-pos" value="${m?.position || ''}" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Department</label><input id="m-dept" value="${m?.department || ''}" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div></div>
-                    <div class="grid grid-cols-2 gap-4"><div><label class="text-[10px] text-corp-text uppercase">Monthly Salary</label><input type="number" id="m-salary" value="${m?.salary || ''}" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="m-status" class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"><option ${m?.status === 'Active' ? 'selected' : ''}>Active</option><option ${m?.status === 'Inactive' ? 'selected' : ''}>Inactive</option></select></div></div>
-                    <button type="submit" class="w-full bg-brand-purple hover:bg-purple-700 py-2 rounded-xl text-xs font-semibold transition-colors mt-2">Save Member</button>
+                    <div class="flex justify-center mb-4">
+                        <label class="cursor-pointer">
+                            <div id="photo-preview" class="w-24 h-24 rounded bg-corp-black border border-dashed border-corp-border flex items-center justify-center overflow-hidden hover:border-purple-500 transition-colors">
+                                ${m?.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : `<span class="text-[10px] text-corp-text text-center px-2">Upload Photo</span>`}
+                            </div>
+                            <input type="file" id="m-photo" class="hidden" accept="image/png, image/jpeg, image/webp">
+                        </label>
+                    </div>
+                    <input type="hidden" id="m-id" value="${m?.id || ''}">
+                    <input type="hidden" id="m-photo-data" value="${m?.photo || ''}">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="text-[10px] text-corp-text uppercase">Full Name</label><input id="m-name" value="${m?.name || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Employee ID</label><input id="m-empid" value="${m?.empId || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="text-[10px] text-corp-text uppercase">Position</label><input id="m-pos" value="${m?.position || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Department</label><input id="m-dept" value="${m?.department || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="text-[10px] text-corp-text uppercase">Monthly Salary</label><input type="number" id="m-salary" value="${m?.salary || ''}" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="m-status" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"><option ${m?.status === 'Active' ? 'selected' : ''}>Active</option><option ${m?.status === 'Inactive' ? 'selected' : ''}>Inactive</option></select></div>
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors mt-2">Save Member</button>
                 </form>
             `);
-            document.getElementById('m-photo').addEventListener('change', function(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); const maxSize = 200; let w = img.width, h = img.height; if (w > h) { if (w > maxSize) { h *= maxSize / w; w = maxSize; } } else { if (h > maxSize) { w *= maxSize / h; h = maxSize; } } canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img, 0, 0, w, h); const dataUrl = canvas.toDataURL('image/jpeg', 0.7); document.getElementById('m-photo-data').value = dataUrl; document.getElementById('photo-preview').innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`; }; img.src = ev.target.result; }; reader.readAsDataURL(file); } });
-            document.getElementById('member-form').addEventListener('submit', async (e) => { e.preventDefault(); const id = document.getElementById('m-id').value; const payload = { id: id || 'mem_'+Date.now(), name: document.getElementById('m-name').value, empId: document.getElementById('m-empid').value, position: document.getElementById('m-pos').value, department: document.getElementById('m-dept').value, salary: document.getElementById('m-salary').value, status: document.getElementById('m-status').value, photo: document.getElementById('m-photo-data').value }; if (id) { await App.apiCall('Members', 'update', payload, id); App.addActivity(`Updated member: ${payload.name}`); } else { await App.apiCall('Members', 'create', payload); App.addActivity(`Added member: ${payload.name}`); } App.closeModal(); await App.loadDb(); App.navigate('members'); });
+            
+            document.getElementById('m-photo').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            const maxSize = 200; let w = img.width, h = img.height;
+                            if (w > h) { if (w > maxSize) { h *= maxSize / w; w = maxSize; } } else { if (h > maxSize) { w *= maxSize / h; h = maxSize; } }
+                            canvas.width = w; canvas.height = h;
+                            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                            document.getElementById('m-photo-data').value = dataUrl;
+                            document.getElementById('photo-preview').innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`;
+                        };
+                        img.src = ev.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('member-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('m-id').value;
+                const payload = {
+                    id: id || 'mem_'+Date.now(), name: document.getElementById('m-name').value, empId: document.getElementById('m-empid').value,
+                    position: document.getElementById('m-pos').value, department: document.getElementById('m-dept').value,
+                    salary: document.getElementById('m-salary').value, status: document.getElementById('m-status').value,
+                    photo: document.getElementById('m-photo-data').value
+                };
+                
+                if (id) { await App.apiCall('Members', 'update', payload, id); App.addActivity(`Updated member: ${payload.name}`); } 
+                else { await App.apiCall('Members', 'create', payload); App.addActivity(`Added member: ${payload.name}`); }
+                
+                App.closeModal(); await App.loadDb(); App.navigate('members');
+            });
         }
     },
 
     salary: {
-        render() { const totalPaid = App.db.salaries.reduce((s, r) => s + parseFloat(r.amount || 0), 0); return `<div class="flex justify-between items-center mb-8"><h2 class="text-2xl font-bold text-white animate-fade-in-up">Salary Management</h2><button id="add-salary-btn" class="bg-brand-purple hover:bg-purple-700 px-4 py-2 rounded-xl text-xs font-semibold transition-colors animate-fade-in-up">Record Payment</button></div><div class="glass-card p-6 rounded-2xl mb-8 glow-purple animate-fade-in-up"><p class="text-xs text-corp-text uppercase tracking-wider">Total Salary Paid</p><p class="text-xl font-bold text-white mt-2">${App.formatCurrency(totalPaid)}</p></div><div class="glass-card rounded-2xl overflow-hidden animate-fade-in-up"><table class="w-full text-xs text-left"><thead class="bg-white/5 text-corp-text uppercase"><tr><th class="p-4">Employee</th><th class="p-4">Amount</th><th class="p-4">Date</th><th class="p-4">Status</th><th class="p-4">Action</th></tr></thead><tbody>${App.db.salaries.map(s => `<tr class="border-b border-white/5 hover:bg-white/5"><td class="p-4 text-white font-medium">${s.name || ''}</td><td class="p-4 text-brand-purple">${App.formatCurrency(s.amount)}</td><td class="p-4 text-corp-text">${App.formatDate(s.date)}</td><td class="p-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${s.status === 'Paid' ? 'bg-brand-green/10 text-brand-green' : 'bg-yellow-500/10 text-yellow-400'}">${s.status || 'Pending'}</span></td><td class="p-4"><button data-del-sal="${s.id}" class="text-brand-red hover:text-red-300 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors">Delete</button></td></tr>`).join('')}</tbody></table></div>`; },
-        init() { document.getElementById('add-salary-btn')?.addEventListener('click', () => { const opts = App.db.members.map(m => `<option value="${m.id}" data-name="${m.name}">${m.name}</option>`).join(''); App.openModal('Record Salary', `<form id="sal-form" class="space-y-4"><div><label class="text-[10px] text-corp-text uppercase">Employee</label><select id="s-member" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple">${opts}</select></div><div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="s-amount" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="s-date" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="s-status" class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"><option>Paid</option><option>Pending</option></select></div><button type="submit" class="w-full bg-brand-purple hover:bg-purple-700 py-2 rounded-xl text-xs font-semibold transition-colors">Save Payment</button></form>`); document.getElementById('s-member').addEventListener('change', (e) => { const mem = App.db.members.find(m => m.id === e.target.value); if(mem) document.getElementById('s-amount').value = mem.salary; }); document.getElementById('sal-form').addEventListener('submit', async (e) => { e.preventDefault(); const sel = document.getElementById('s-member'); const payload = { id: 'sal_'+Date.now(), memberId: sel.value, name: sel.options[sel.selectedIndex].dataset.name, amount: document.getElementById('s-amount').value, date: document.getElementById('s-date').value, status: document.getElementById('s-status').value }; await App.apiCall('Salaries', 'create', payload); App.addActivity('Added salary payment'); App.closeModal(); await App.loadDb(); App.navigate('salary'); }); }); document.querySelectorAll('[data-del-sal]').forEach(btn => btn.addEventListener('click', async (e) => { await App.apiCall('Salaries', 'delete', null, e.target.dataset.delSal); App.addActivity('Deleted salary record'); await App.loadDb(); App.navigate('salary'); })); }
+        render() {
+            const totalPaid = App.db.salaries.reduce((s, r) => s + parseFloat(r.amount || 0), 0);
+            return `
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">Salary Management</h2>
+                    <button id="add-salary-btn" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-xs font-semibold transition-colors">Record Payment</button>
+                </div>
+                <div class="bg-corp-panel border border-corp-border p-4 rounded mb-6">
+                    <p class="text-xs text-corp-text uppercase">Total Salary Paid</p>
+                    <p class="text-xl font-bold text-white mt-1">${App.formatCurrency(totalPaid)}</p>
+                </div>
+                <div class="bg-corp-panel border border-corp-border rounded overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-corp-black text-corp-text uppercase"><tr><th class="p-3">Employee</th><th class="p-3">Amount</th><th class="p-3">Date</th><th class="p-3">Status</th><th class="p-3">Action</th></tr></thead>
+                        <tbody>${App.db.salaries.map(s => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${s.name || ''}</td><td class="p-3 text-purple-400">${App.formatCurrency(s.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(s.date)}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${s.status === 'Paid' ? 'bg-green-900/20 text-green-400' : 'bg-yellow-900/20 text-yellow-400'}">${s.status || 'Pending'}</span></td><td class="p-3"><button data-del-sal="${s.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            `;
+        },
+        init() {
+            document.getElementById('add-salary-btn')?.addEventListener('click', () => {
+                const opts = App.db.members.map(m => `<option value="${m.id}" data-name="${m.name}">${m.name}</option>`).join('');
+                App.openModal('Record Salary', `
+                    <form id="sal-form" class="space-y-4">
+                        <div><label class="text-[10px] text-corp-text uppercase">Employee</label><select id="s-member" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none">${opts}</select></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="s-amount" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="s-date" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Status</label><select id="s-status" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"><option>Paid</option><option>Pending</option></select></div>
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors">Save Payment</button>
+                    </form>
+                `);
+                document.getElementById('s-member').addEventListener('change', (e) => {
+                    const mem = App.db.members.find(m => m.id === e.target.value);
+                    if(mem) document.getElementById('s-amount').value = mem.salary;
+                });
+                document.getElementById('sal-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const sel = document.getElementById('s-member');
+                    const payload = { id: 'sal_'+Date.now(), memberId: sel.value, name: sel.options[sel.selectedIndex].dataset.name, amount: document.getElementById('s-amount').value, date: document.getElementById('s-date').value, status: document.getElementById('s-status').value };
+                    await App.apiCall('Salaries', 'create', payload);
+                    App.addActivity('Added salary payment');
+                    App.closeModal(); await App.loadDb(); App.navigate('salary');
+                });
+            });
+            document.querySelectorAll('[data-del-sal]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Salaries', 'delete', null, e.target.dataset.delSal);
+                App.addActivity('Deleted salary record');
+                await App.loadDb(); App.navigate('salary');
+            }));
+        }
     },
 
     income: {
         render() { return this.page('income', 'Income', ['Client Payments','Donations','Sponsorships','Investments','Other Revenue']); },
         init() { this.initPage('income', 'source', 'Income'); },
-        page(type, title, cats) { const data = App.db[type]; const total = data.reduce((s, i) => s + parseFloat(i.amount || 0), 0); return `<div class="flex justify-between items-center mb-8"><h2 class="text-2xl font-bold text-white animate-fade-in-up">${title} Management</h2><button id="add-fin-btn" class="bg-brand-purple hover:bg-purple-700 px-4 py-2 rounded-xl text-xs font-semibold transition-colors animate-fade-in-up">Add ${title}</button></div><div class="glass-card p-6 rounded-2xl mb-8 glow-green animate-fade-in-up"><p class="text-xs text-corp-text uppercase tracking-wider">Total ${title}</p><p class="text-xl font-bold text-brand-green mt-2">${App.formatCurrency(total)}</p></div><div class="glass-card rounded-2xl overflow-hidden animate-fade-in-up"><table class="w-full text-xs text-left"><thead class="bg-white/5 text-corp-text uppercase"><tr><th class="p-4">Name</th><th class="p-4">Category</th><th class="p-4">Amount</th><th class="p-4">Date</th><th class="p-4">Action</th></tr></thead><tbody>${data.map(i => `<tr class="border-b border-white/5 hover:bg-white/5"><td class="p-4 text-white font-medium">${type === 'income' ? i.source : i.name}</td><td class="p-4 text-corp-text"><span class="px-2 py-0.5 bg-white/5 rounded-full">${i.category || ''}</span></td><td class="p-4 text-brand-purple font-medium">${App.formatCurrency(i.amount)}</td><td class="p-4 text-corp-text">${App.formatDate(i.date)}</td><td class="p-4"><button data-del-fin="${i.id}" class="text-brand-red hover:text-red-300 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors">Delete</button></td></tr>`).join('')}</tbody></table></div>`; },
-        initPage(type, field, title) { const catsArr = type === 'income' ? ['Client Payments','Donations','Sponsorships','Investments','Other Revenue'] : ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous']; document.getElementById('add-fin-btn')?.addEventListener('click', () => { App.openModal(`Add ${title}`, `<form id="fin-form" class="space-y-4"><div><label class="text-[10px] text-corp-text uppercase">Name/Source</label><input id="f-name" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="f-amount" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Category</label><select id="f-cat" class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple">${catsArr.map(c=>`<option>${c}</option>`).join('')}</select></div><div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="f-date" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><button type="submit" class="w-full bg-brand-purple hover:bg-purple-700 py-2 rounded-xl text-xs font-semibold transition-colors">Save</button></form>`); document.getElementById('fin-form').addEventListener('submit', async (e) => { e.preventDefault(); const payload = { id: type.charAt(0)+'_'+Date.now(), [field]: document.getElementById('f-name').value, amount: document.getElementById('f-amount').value, category: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, desc: '' }; await App.apiCall(type.charAt(0).toUpperCase() + type.slice(1), 'create', payload); App.addActivity(`Added ${title} record`); App.closeModal(); await App.loadDb(); App.navigate(type); }); }); document.querySelectorAll('[data-del-fin]').forEach(btn => btn.addEventListener('click', async (e) => { const table = type.charAt(0).toUpperCase() + type.slice(1); await App.apiCall(table, 'delete', null, e.target.dataset.delFin); App.addActivity(`Deleted ${title} record`); await App.loadDb(); App.navigate(type); })); }
+        page(type, title, cats) {
+            const data = App.db[type]; const total = data.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
+            return `
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">${title} Management</h2>
+                    <button id="add-fin-btn" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-xs font-semibold transition-colors">Add ${title}</button>
+                </div>
+                <div class="bg-corp-panel border border-corp-border p-4 rounded mb-6">
+                    <p class="text-xs text-corp-text uppercase">Total ${title}</p>
+                    <p class="text-xl font-bold text-green-400 mt-1">${App.formatCurrency(total)}</p>
+                </div>
+                <div class="bg-corp-panel border border-corp-border rounded overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-corp-black text-corp-text uppercase"><tr><th class="p-3">Name</th><th class="p-3">Category</th><th class="p-3">Amount</th><th class="p-3">Date</th><th class="p-3">Action</th></tr></thead>
+                        <tbody>${data.map(i => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 text-white">${type === 'income' ? i.source : i.name}</td><td class="p-3 text-corp-text"><span class="px-2 py-0.5 bg-corp-black rounded">${i.category || ''}</span></td><td class="p-3 text-purple-400">${App.formatCurrency(i.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(i.date)}</td><td class="p-3"><button data-del-fin="${i.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            `;
+        },
+        initPage(type, field, title) {
+            const catsArr = type === 'income' ? ['Client Payments','Donations','Sponsorships','Investments','Other Revenue'] : ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous'];
+            document.getElementById('add-fin-btn')?.addEventListener('click', () => {
+                App.openModal(`Add ${title}`, `
+                    <form id="fin-form" class="space-y-4">
+                        <div><label class="text-[10px] text-corp-text uppercase">Name/Source</label><input id="f-name" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="f-amount" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Category</label><select id="f-cat" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none">${catsArr.map(c=>`<option>${c}</option>`).join('')}</select></div>
+                        <div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="f-date" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors">Save</button>
+                    </form>
+                `);
+                document.getElementById('fin-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const payload = { id: type.charAt(0)+'_'+Date.now(), [field]: document.getElementById('f-name').value, amount: document.getElementById('f-amount').value, category: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, desc: '' };
+                    await App.apiCall(type.charAt(0).toUpperCase() + type.slice(1), 'create', payload);
+                    App.addActivity(`Added ${title} record`);
+                    App.closeModal(); await App.loadDb(); App.navigate(type);
+                });
+            });
+            document.querySelectorAll('[data-del-fin]').forEach(btn => btn.addEventListener('click', async (e) => {
+                const table = type.charAt(0).toUpperCase() + type.slice(1);
+                await App.apiCall(table, 'delete', null, e.target.dataset.delFin);
+                App.addActivity(`Deleted ${title} record`);
+                await App.loadDb(); App.navigate(type);
+            }));
+        }
     },
 
-    expenses: { render() { return Pages.income.page('expenses', 'Expenses', ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous']); }, init() { return Pages.income.initPage('expenses', 'name', 'Expenses'); } },
+    expenses: {
+        render() { return Pages.income.page('expenses', 'Expenses', ['Salaries','Software','Marketing','Equipment','Office','Miscellaneous']); },
+        init() { return Pages.income.initPage('expenses', 'name', 'Expenses'); }
+    },
 
     savings: {
-        render() { const balance = App.db.savings.reduce((s, r) => s + (r.type === 'Deposit' ? parseFloat(r.amount || 0) : -parseFloat(r.amount || 0)), 0); return `<div class="flex justify-between items-center mb-8"><h2 class="text-2xl font-bold text-white animate-fade-in-up">Company Savings</h2><div class="flex gap-3 animate-fade-in-up"><button id="add-deposit" class="bg-brand-purple hover:bg-purple-700 px-4 py-2 rounded-xl text-xs font-semibold transition-colors">Deposit</button><button id="add-withdraw" class="glass-card hover:bg-white/10 px-4 py-2 rounded-xl text-xs font-semibold transition-colors">Withdraw</button></div></div><div class="glass-card p-6 rounded-2xl mb-8 glow-purple animate-fade-in-up"><p class="text-xs text-corp-text uppercase tracking-wider">Total Savings Balance</p><p class="text-xl font-bold text-brand-purple mt-2">${App.formatCurrency(balance)}</p></div><div class="glass-card rounded-2xl overflow-hidden animate-fade-in-up"><table class="w-full text-xs text-left"><thead class="bg-white/5 text-corp-text uppercase"><tr><th class="p-4">Type</th><th class="p-4">Amount</th><th class="p-4">Date</th><th class="p-4">Description</th><th class="p-4">Action</th></tr></thead><tbody>${App.db.savings.map(i => `<tr class="border-b border-white/5 hover:bg-white/5"><td class="p-4 ${i.type === 'Deposit' ? 'text-brand-green' : 'text-brand-red'} font-medium">${i.type}</td><td class="p-4 text-white">${App.formatCurrency(i.amount)}</td><td class="p-4 text-corp-text">${App.formatDate(i.date)}</td><td class="p-4 text-corp-text">${i.desc || 'N/A'}</td><td class="p-4"><button data-del-sav="${i.id}" class="text-brand-red hover:text-red-300 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors">Delete</button></td></tr>`).join('')}</tbody></table></div>`; },
-        init() { const form = (type) => `<form id="sav-form" class="space-y-4"><input type="hidden" id="sv-type" value="${type}"><div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="sv-amount" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="sv-date" required class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><div><label class="text-[10px] text-corp-text uppercase">Description</label><input id="sv-desc" class="w-full mt-1 p-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"></div><button type="submit" class="w-full bg-brand-purple hover:bg-purple-700 py-2 rounded-xl text-xs font-semibold transition-colors">Save</button></form>`; document.getElementById('add-deposit')?.addEventListener('click', () => { App.openModal('Deposit Savings', form('Deposit')); this.bindForm(); }); document.getElementById('add-withdraw')?.addEventListener('click', () => { App.openModal('Withdraw Savings', form('Withdraw')); this.bindForm(); }); document.querySelectorAll('[data-del-sav]').forEach(btn => btn.addEventListener('click', async (e) => { await App.apiCall('Savings', 'delete', null, e.target.dataset.delSav); App.addActivity('Deleted savings record'); await App.loadDb(); App.navigate('savings'); })); },
-        bindForm() { document.getElementById('sav-form').addEventListener('submit', async (e) => { e.preventDefault(); const payload = { id: 'sav_'+Date.now(), type: document.getElementById('sv-type').value, amount: document.getElementById('sv-amount').value, date: document.getElementById('sv-date').value, desc: document.getElementById('sv-desc').value }; await App.apiCall('Savings', 'create', payload); App.addActivity(`Recorded ${payload.type} in savings`); App.closeModal(); await App.loadDb(); App.navigate('savings'); }); }
+        render() {
+            const balance = App.db.savings.reduce((s, r) => s + (r.type === 'Deposit' ? parseFloat(r.amount || 0) : -parseFloat(r.amount || 0)), 0);
+            return `
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">Company Savings</h2>
+                    <div class="flex gap-2">
+                        <button id="add-deposit" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-xs font-semibold transition-colors">Deposit</button>
+                        <button id="add-withdraw" class="bg-corp-panel border border-corp-border hover:bg-corp-black px-4 py-2 rounded text-xs font-semibold transition-colors">Withdraw</button>
+                    </div>
+                </div>
+                <div class="bg-corp-panel border border-corp-border p-4 rounded mb-6">
+                    <p class="text-xs text-corp-text uppercase">Total Savings Balance</p>
+                    <p class="text-xl font-bold text-purple-400 mt-1">${App.formatCurrency(balance)}</p>
+                </div>
+                <div class="bg-corp-panel border border-corp-border rounded overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-corp-black text-corp-text uppercase"><tr><th class="p-3">Type</th><th class="p-3">Amount</th><th class="p-3">Date</th><th class="p-3">Description</th><th class="p-3">Action</th></tr></thead>
+                        <tbody>${App.db.savings.map(i => `<tr class="border-b border-corp-border hover:bg-corp-black/50"><td class="p-3 ${i.type === 'Deposit' ? 'text-green-400' : 'text-red-400'}">${i.type}</td><td class="p-3 text-white">${App.formatCurrency(i.amount)}</td><td class="p-3 text-corp-text">${App.formatDate(i.date)}</td><td class="p-3 text-corp-text">${i.desc || 'N/A'}</td><td class="p-3"><button data-del-sav="${i.id}" class="text-red-400 hover:text-red-300">Delete</button></td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            `;
+        },
+        init() {
+            const form = (type) => `
+                <form id="sav-form" class="space-y-4">
+                    <input type="hidden" id="sv-type" value="${type}">
+                    <div><label class="text-[10px] text-corp-text uppercase">Amount</label><input type="number" id="sv-amount" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                    <div><label class="text-[10px] text-corp-text uppercase">Date</label><input type="date" id="sv-date" required class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                    <div><label class="text-[10px] text-corp-text uppercase">Description</label><input id="sv-desc" class="w-full mt-1 p-2 bg-corp-black border border-corp-border rounded text-xs text-white outline-none"></div>
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors">Save</button>
+                </form>
+            `;
+            document.getElementById('add-deposit')?.addEventListener('click', () => { App.openModal('Deposit Savings', form('Deposit')); this.bindForm(); });
+            document.getElementById('add-withdraw')?.addEventListener('click', () => { App.openModal('Withdraw Savings', form('Withdraw')); this.bindForm(); });
+            document.querySelectorAll('[data-del-sav]').forEach(btn => btn.addEventListener('click', async (e) => {
+                await App.apiCall('Savings', 'delete', null, e.target.dataset.delSav);
+                App.addActivity('Deleted savings record');
+                await App.loadDb(); App.navigate('savings');
+            }));
+        },
+        bindForm() {
+            document.getElementById('sav-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const payload = { id: 'sav_'+Date.now(), type: document.getElementById('sv-type').value, amount: document.getElementById('sv-amount').value, date: document.getElementById('sv-date').value, desc: document.getElementById('sv-desc').value };
+                await App.apiCall('Savings', 'create', payload);
+                App.addActivity(`Recorded ${payload.type} in savings`);
+                App.closeModal(); await App.loadDb(); App.navigate('savings');
+            });
+        }
     },
 
     reports: {
-        render() { return `<h2 class="text-2xl font-bold text-white mb-8 animate-fade-in-up">Reports & Export</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="glass-card p-8 rounded-2xl animate-fade-in-up"><h3 class="text-sm font-semibold mb-6 text-white uppercase tracking-wider">Generate & Export Reports</h3><div class="space-y-3"><button data-report="income" class="w-full text-left px-5 py-3 glass-card rounded-xl hover:border-brand-purple transition-colors text-xs text-corp-text hover:text-white font-medium">Income Report</button><button data-report="expenses" class="w-full text-left px-5 py-3 glass-card rounded-xl hover:border-brand-purple transition-colors text-xs text-corp-text hover:text-white font-medium">Expenses Report</button><button data-report="salaries" class="w-full text-left px-5 py-3 glass-card rounded-xl hover:border-brand-purple transition-colors text-xs text-corp-text hover:text-white font-medium">Salary Report</button><button data-report="savings" class="w-full text-left px-5 py-3 glass-card rounded-xl hover:border-brand-purple transition-colors text-xs text-corp-text hover:text-white font-medium">Savings Report</button></div></div><div class="glass-card p-8 rounded-2xl animate-fade-in-up" style="animation-delay:0.2s"><h3 class="text-sm font-semibold mb-6 text-white uppercase tracking-wider">Activity Log</h3><div class="space-y-3 max-h-80 overflow-y-auto pr-2">${App.db.activities.map(a => `<div class="text-[11px] border-b border-white/5 pb-2"><span class="text-zinc-600">${a.time ? new Date(a.time).toLocaleString() : ''}</span><br><span class="text-corp-text">${a.desc || ''}</span></div>`).join('')}</div></div></div>`; },
-        init() { document.querySelectorAll('[data-report]').forEach(btn => btn.addEventListener('click', (e) => this.generate(e.target.dataset.report))); },
-        generate(type) { let data = App.db[type]; let title = ""; let headers = []; if (type === 'income') { title = "Income Report"; headers = ['Source', 'Category', 'Amount', 'Date']; } else if (type === 'expenses') { title = "Expenses Report"; headers = ['Name', 'Category', 'Amount', 'Date']; } else if (type === 'salaries') { title = "Salary Report"; headers = ['Employee', 'Amount', 'Date', 'Status']; } else if (type === 'savings') { title = "Savings Report"; headers = ['Type', 'Amount', 'Date', 'Description']; } if(!data.length) { App.addNotification(`Cannot export empty ${type} report`); alert("No data to export!"); return; } App.openModal(`Export ${title}`, `<div class="space-y-4"><p class="text-xs text-corp-text">Exporting ${data.length} records.</p><div class="grid grid-cols-3 gap-3"><button id="exp-pdf" class="bg-brand-purple hover:bg-purple-700 py-2 rounded-xl text-xs font-semibold transition-colors">PDF</button><button id="exp-xlsx" class="glass-card hover:bg-white/10 py-2 rounded-xl text-xs font-semibold transition-colors text-white">Excel</button><button id="exp-csv" class="glass-card hover:bg-white/10 py-2 rounded-xl text-xs font-semibold transition-colors text-white">CSV</button></div></div>`); document.getElementById('exp-pdf').addEventListener('click', () => this.exportPDF(title, data, headers, type)); document.getElementById('exp-xlsx').addEventListener('click', () => this.exportXLS(title, data, headers, type)); document.getElementById('exp-csv').addEventListener('click', () => this.exportCSV(title, data, headers, type)); },
-        exportPDF(title, data, headers, type) { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setTextColor(255, 255, 255); doc.setFontSize(18); doc.text(`TyPixel - ${title}`, 14, 22); doc.setFontSize(10); doc.setTextColor(150, 150, 150); doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30); let y = 40; doc.setFontSize(11); doc.setTextColor(200, 200, 200); headers.forEach((h, i) => doc.text(h, 14 + (i * 45), y)); y += 10; doc.setTextColor(255, 255, 255); data.forEach(row => { if(y > 280) { doc.addPage(); y = 20; } let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type)); doc.text(String(col1 || ''), 14, y); doc.text(String(row.category || row.status || row.type || ''), 59, y); doc.text(String(App.formatCurrency(row.amount)), 104, y); doc.text(String(row.date || row.desc || ''), 149, y); y += 8; }); doc.save(`${title.replace(/\s/g, '_')}.pdf`); App.addActivity(`Exported PDF: ${title}`); App.closeModal(); },
-        exportXLS(title, data, headers, type) { const ws_data = [headers]; data.forEach(row => { let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type)); let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || '']; ws_data.push(r); }); const ws = XLSX.utils.aoa_to_sheet(ws_data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Report"); XLSX.writeFile(wb, `${title.replace(/\s/g, '_')}.xlsx`); App.addActivity(`Exported Excel: ${title}`); App.closeModal(); },
-        exportCSV(title, data, headers, type) { let csv = headers.join(',') + '\n'; data.forEach(row => { let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type)); let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || '']; csv += r.map(v => `"${v}"`).join(',') + '\n'; }); const blob = new Blob([csv], { type: 'text/csv' }); const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s/g, '_')}.csv`; a.click(); App.addActivity(`Exported CSV: ${title}`); App.closeModal(); }
+        render() {
+            return `
+                <h2 class="text-xl font-bold text-white mb-6">Reports & Export</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-corp-panel border border-corp-border p-6 rounded">
+                        <h3 class="text-sm font-semibold mb-4 text-white">Generate & Export Reports</h3>
+                        <div class="space-y-2">
+                            <button data-report="income" class="w-full text-left px-4 py-3 bg-corp-black border border-corp-border rounded hover:border-purple-500 transition-colors text-xs text-corp-text hover:text-white">Income Report</button>
+                            <button data-report="expenses" class="w-full text-left px-4 py-3 bg-corp-black border border-corp-border rounded hover:border-purple-500 transition-colors text-xs text-corp-text hover:text-white">Expenses Report</button>
+                            <button data-report="salaries" class="w-full text-left px-4 py-3 bg-corp-black border border-corp-border rounded hover:border-purple-500 transition-colors text-xs text-corp-text hover:text-white">Salary Report</button>
+                            <button data-report="savings" class="w-full text-left px-4 py-3 bg-corp-black border border-corp-border rounded hover:border-purple-500 transition-colors text-xs text-corp-text hover:text-white">Savings Report</button>
+                        </div>
+                    </div>
+                    <div class="bg-corp-panel border border-corp-border p-6 rounded">
+                        <h3 class="text-sm font-semibold mb-4 text-white">Activity Log</h3>
+                        <div class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                            ${App.db.activities.map(a => `<div class="text-[11px] border-b border-corp-border pb-2"><span class="text-zinc-600">${a.time ? new Date(a.time).toLocaleString() : ''}</span><br><span class="text-corp-text">${a.desc || ''}</span></div>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        },
+        init() {
+            document.querySelectorAll('[data-report]').forEach(btn => btn.addEventListener('click', (e) => this.generate(e.target.dataset.report)));
+        },
+        generate(type) {
+            let data = App.db[type]; let title = ""; let headers = [];
+            if (type === 'income') { title = "Income Report"; headers = ['Source', 'Category', 'Amount', 'Date']; }
+            else if (type === 'expenses') { title = "Expenses Report"; headers = ['Name', 'Category', 'Amount', 'Date']; }
+            else if (type === 'salaries') { title = "Salary Report"; headers = ['Employee', 'Amount', 'Date', 'Status']; }
+            else if (type === 'savings') { title = "Savings Report"; headers = ['Type', 'Amount', 'Date', 'Description']; }
+            
+            if(!data.length) { App.addNotification(`Cannot export empty ${type} report`); alert("No data to export!"); return; }
+
+            App.openModal(`Export ${title}`, `
+                <div class="space-y-4">
+                    <p class="text-xs text-corp-text">Exporting ${data.length} records.</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button id="exp-pdf" class="bg-purple-600 hover:bg-purple-700 py-2 rounded text-xs font-semibold transition-colors">PDF</button>
+                        <button id="exp-xlsx" class="bg-corp-black border border-corp-border hover:border-purple-500 py-2 rounded text-xs font-semibold transition-colors text-white">Excel</button>
+                        <button id="exp-csv" class="bg-corp-black border border-corp-border hover:border-purple-500 py-2 rounded text-xs font-semibold transition-colors text-white">CSV</button>
+                    </div>
+                </div>
+            `);
+            document.getElementById('exp-pdf').addEventListener('click', () => this.exportPDF(title, data, headers, type));
+            document.getElementById('exp-xlsx').addEventListener('click', () => this.exportXLS(title, data, headers, type));
+            document.getElementById('exp-csv').addEventListener('click', () => this.exportCSV(title, data, headers, type));
+        },
+        exportPDF(title, data, headers, type) {
+            const { jsPDF } = window.jspdf; const doc = new jsPDF();
+            doc.setTextColor(255, 255, 255); doc.setFontSize(18); doc.text(`TyPixel - ${title}`, 14, 22);
+            doc.setFontSize(10); doc.setTextColor(150, 150, 150); doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
+            let y = 40; doc.setFontSize(11); doc.setTextColor(200, 200, 200);
+            headers.forEach((h, i) => doc.text(h, 14 + (i * 45), y));
+            y += 10; doc.setTextColor(255, 255, 255);
+            data.forEach(row => {
+                if(y > 280) { doc.addPage(); y = 20; }
+                let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
+                doc.text(String(col1 || ''), 14, y);
+                doc.text(String(row.category || row.status || row.type || ''), 59, y);
+                doc.text(String(App.formatCurrency(row.amount)), 104, y);
+                doc.text(String(row.date || row.desc || ''), 149, y);
+                y += 8;
+            });
+            doc.save(`${title.replace(/\s/g, '_')}.pdf`);
+            App.addActivity(`Exported PDF: ${title}`); App.closeModal();
+        },
+        exportXLS(title, data, headers, type) {
+            const ws_data = [headers];
+            data.forEach(row => {
+                let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
+                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || ''];
+                ws_data.push(r);
+            });
+            const ws = XLSX.utils.aoa_to_sheet(ws_data); const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Report"); XLSX.writeFile(wb, `${title.replace(/\s/g, '_')}.xlsx`);
+            App.addActivity(`Exported Excel: ${title}`); App.closeModal();
+        },
+        exportCSV(title, data, headers, type) {
+            let csv = headers.join(',') + '\n';
+            data.forEach(row => {
+                let col1 = type === 'income' ? row.source : (type === 'expenses' ? row.name : (type === 'salaries' ? row.name : row.type));
+                let r = [col1, row.category || row.status || row.type || '', row.amount, row.date || row.desc || ''];
+                csv += r.map(v => `"${v}"`).join(',') + '\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv' }); const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s/g, '_')}.csv`; a.click();
+            App.addActivity(`Exported CSV: ${title}`); App.closeModal();
+        }
     }
 };
 
