@@ -117,8 +117,7 @@ const App = {
         let url = `${API_URL}?action=${action}&table=${table}`;
         if (id) url += `&id=${id}`;
         
-        // Using 'text/plain' to bypass Google Apps Script CORS Preflight issues
-        const options = { method: action === 'read' ? 'GET' : 'POST' };
+        const options = { method: action === 'read' ? 'GET' : 'POST', redirect: 'follow' };
         if (payload) {
             options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
             options.body = JSON.stringify(payload);
@@ -152,16 +151,37 @@ const App = {
 
     async login(username, password, remember) {
         document.getElementById('login-btn').textContent = 'Signing In...';
-        const users = await this.apiCall('Users', 'read');
-        const user = users.find(u => u.username === username && u.password === password);
+        const errorEl = document.getElementById('login-error');
+        errorEl.classList.add('hidden');
         
-        if (user) {
-            this.user = username;
-            if (remember) localStorage.setItem('typixel_session', 'active');
-            else sessionStorage.setItem('typixel_session', 'active');
-            this.showApp();
-            return true;
+        try {
+            const users = await this.apiCall('Users', 'read');
+            console.log("Fetched Users from Sheet:", users);
+            
+            if (!users || users.length === 0) {
+                errorEl.textContent = "No users found in Google Sheet. Check 'Users' tab.";
+                errorEl.classList.remove('hidden');
+                document.getElementById('login-btn').textContent = 'Sign In';
+                return false;
+            }
+
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                this.user = username;
+                if (remember) localStorage.setItem('typixel_session', 'active');
+                else sessionStorage.setItem('typixel_session', 'active');
+                this.showApp();
+                return true;
+            } else {
+                errorEl.textContent = "Invalid credentials. Check sheet data.";
+                errorEl.classList.remove('hidden');
+            }
+        } catch (err) {
+            errorEl.textContent = "Connection error. Check script URL.";
+            errorEl.classList.remove('hidden');
         }
+        
         document.getElementById('login-btn').textContent = 'Sign In';
         return false;
     },
@@ -260,8 +280,7 @@ const App = {
     bindEvents() {
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const success = await this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked);
-            if (!success) document.getElementById('login-error').classList.remove('hidden');
+            await this.login(document.getElementById('login-user').value, document.getElementById('login-pass').value, document.getElementById('remember-me').checked);
         });
         document.getElementById('toggle-pass').addEventListener('click', (e) => {
             const input = document.getElementById('login-pass');
